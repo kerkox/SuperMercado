@@ -48,13 +48,7 @@ public class Cliente {
         return puntos;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
-
-    @Override
+     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
