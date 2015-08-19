@@ -38,7 +38,7 @@ public class Compra {
         if(costoTotal>=200000){
             puntosCompra= (int) Math.floor(costoTotal/10000.0);
         }
-        this.costoTotal += puntosCompra;
+        this.cliente.incrementarPuntos(puntosCompra); //Correccion de asignacion de Puntos
         return puntosCompra;
     }
 
