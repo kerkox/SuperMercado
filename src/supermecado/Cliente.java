@@ -62,6 +62,12 @@ public class Cliente {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Nombre: "+ nombres + ", Apellidos=" + Apellidos;
+    }
+    
     
     
     

@@ -7,6 +7,7 @@ package supermecado;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -42,6 +43,14 @@ public class Compra {
         return puntosCompra;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
    
 
     public int getCostoTotal() {
@@ -72,5 +81,22 @@ public class Compra {
         return detalleFound;
         
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Compra other = (Compra) obj;
+        if (!Objects.equals(this.fecha, other.fecha)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

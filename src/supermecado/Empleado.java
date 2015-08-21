@@ -70,6 +70,13 @@ public class Empleado {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "nombres=" + nombres + ", apellidos=" + apellidos ;
+    }
+    
+    
+
    
     
     
