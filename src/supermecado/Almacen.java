@@ -15,13 +15,13 @@ import java.util.Date;
 public class Almacen {
 
     private String nombre;
-    private long NIT;
+    private String NIT;
     private ArrayList<Producto> productos = new ArrayList<>();
     private ArrayList<Empleado> empleados = new ArrayList<>();
     private ArrayList<Cliente> clientes = new ArrayList<>();
     private ArrayList<Compra> compras = new ArrayList<>();
 
-    public Almacen(String nombre, long NIT) {
+    public Almacen(String nombre, String NIT) {
         this.nombre = nombre;
         this.NIT = NIT;
     }
@@ -89,6 +89,20 @@ public class Almacen {
         
     }
     
+    public Empleado BuscarEmpleado(String login) throws ObjectNotFoundException{
+        Empleado employee=null;
+        for(Empleado worker : empleados ){
+            if(worker.getLogin().equals(login)){
+                employee=worker;
+            }
+        }
+        if(employee==null){
+            throw new ObjectNotFoundException("login: " + login + " invalido");
+        }
+        
+        return employee;
+        
+    }
     /**
      * busca el cliente en la lista de clientes por identificacion
      * @param id
@@ -155,7 +169,7 @@ public class Almacen {
         return nombre;
     }
 
-    public long getNIT() {
+    public String getNIT() {
         return NIT;
     }
 
