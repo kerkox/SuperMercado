@@ -39,6 +39,22 @@ public class AlmacenTest {
     }
 
     /**
+     * Test of Logueo method, of class Almacen.
+     */
+    @Test
+    public void testLogueo() throws Exception {
+        System.out.println("Logueo");
+        String user = "";
+        char[] pass = null;
+        Almacen instance = null;
+        boolean expResult = false;
+        boolean result = instance.Logueo(user, pass);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of add method, of class Almacen.
      */
     @Test
