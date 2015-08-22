@@ -19,6 +19,10 @@ import static org.junit.Assert.*;
  */
 public class CompraTest {
     
+    private Producto item = new Producto("001", "RAM 4GB", 95000);
+    private DetalleCompra detalle = new DetalleCompra(4,item);
+    private Cliente customer = new Cliente(123456789, "Pol", "KER");
+    
     public CompraTest() {
     }
     
@@ -44,11 +48,15 @@ public class CompraTest {
     @Test
     public void testAdd() {
         System.out.println("add");
-        DetalleCompra detalle = null;
-        Compra instance = null;
+        try{
+//        DetalleCompra detalle = null;
+        Compra instance = new Compra(customer);
         instance.add(detalle);
+        }catch(Exception error){
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+            error.printStackTrace();
+            fail("The test case is a prototype.");
+        }
     }
 
     /**

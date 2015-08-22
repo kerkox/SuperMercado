@@ -35,6 +35,11 @@ public class Empleado {
         this.password = password;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    
     public long getIdentificacion() {
         return identificacion;
     }

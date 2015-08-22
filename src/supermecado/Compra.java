@@ -21,8 +21,8 @@ public class Compra {
     private Empleado empleado;
     private Date fecha;
 
-    public Compra(int costoTotal, Cliente cliente) {
-        this.costoTotal = costoTotal;
+    public Compra(Cliente cliente) {
+        
         this.cliente = cliente;
     }
     /**

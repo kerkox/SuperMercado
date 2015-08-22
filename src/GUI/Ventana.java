@@ -5,7 +5,13 @@
  */
 package GUI;
 
+import java.util.Arrays;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import supermecado.Almacen;
+import supermecado.Empleado;
+import supermecado.ObjectNotFoundException;
 
 /**
  *
@@ -16,22 +22,21 @@ public class Ventana extends javax.swing.JFrame {
     /**
      * Creates new form Ventana
      */
-    private Almacen market=null;
-   
+    private Almacen market = null;
+    private boolean logeado = false;
+
     public Ventana() {
         initComponents();
-        
-        
+
     }
+
     public Ventana(Almacen market) {
         this.market = market;
         initComponents();
-        
+
         AlmacenName.setText(this.market.getNombre());
         AlmacenNit.setText(this.market.getNIT());
-        
-        
-        
+
     }
 
     /**
@@ -78,7 +83,7 @@ public class Ventana extends javax.swing.JFrame {
         vendedor = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        Login = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -315,8 +320,13 @@ public class Ventana extends javax.swing.JFrame {
 
         jMenu1.setText("Aplicación");
 
-        jMenuItem1.setText("Iniciar Sesión");
-        jMenu1.add(jMenuItem1);
+        Login.setText("Iniciar Sesión");
+        Login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Login);
 
         jMenuItem2.setText("Cerrar Sesión");
         jMenu1.add(jMenuItem2);
@@ -372,6 +382,33 @@ public class Ventana extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
+        try {
+            String loginEmpleado, passEmpleado;
+            Empleado empleado=null;
+            loginEmpleado = JOptionPane.showInputDialog("Ingrese Login de Empleado: ");
+            
+            empleado = this.market.BuscarEmpleado(loginEmpleado);
+            JLabel label = new JLabel("Ingrese Password de Empleado: ");
+            JPasswordField passIn = new JPasswordField();
+            
+             JOptionPane.showConfirmDialog(null,new Object[]{label,passIn},"Password: ",
+                     JOptionPane.OK_CANCEL_OPTION);
+                     passEmpleado = Arrays.toString(passIn.getPassword());
+            
+            if(empleado.getPassword().equals(passEmpleado)){
+                logeado = true;
+            }else{
+                JOptionPane.showMessageDialog(null, "Password Incorrecto");
+            }
+            
+        } catch (ObjectNotFoundException notFound) {
+            JOptionPane.showMessageDialog(null, notFound.getMessage());
+        } catch (Exception error) {
+            JOptionPane.showMessageDialog(null, error.getMessage());
+        }
+    }//GEN-LAST:event_LoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,6 +452,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField ClientePuntos;
     private javax.swing.JTextField CompraPuntos;
     private javax.swing.JTextField CompraTotal;
+    private javax.swing.JMenuItem Login;
     private javax.swing.JTextField ProductoCantidad;
     private javax.swing.JTextField ProductoCode;
     private javax.swing.JTextField ProductoCosto;
@@ -439,7 +477,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
