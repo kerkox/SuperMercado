@@ -26,7 +26,21 @@ public class Almacen {
         this.NIT = NIT;
     }
 
-    
+    public boolean Logueo(String user, char[] pass)throws Exception{
+        boolean log = false;
+        Empleado worker = BuscarEmpleado(user);
+        String checker="", passOk=worker.getPassword();
+        for(int x=0;x<pass.length;x++){
+            checker +=pass[x]+"";
+        }
+        
+        
+        if(passOk.equals(checker)){
+            log=true;
+        }
+       
+        return log;
+    }
     //*******************************    
     // Agregado de obejtos a las listas correspondientes
     

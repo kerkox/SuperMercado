@@ -19,7 +19,7 @@ public class Compra {
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
     private Cliente cliente;
     private Empleado empleado;
-    private Date fecha;
+    private Date fecha = new Date();
 
     public Compra(Cliente cliente) {
         

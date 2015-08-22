@@ -14,12 +14,29 @@ public class SuperMecado {
      */
     public static void main(String[] args) {
        //Datos Base
+        try{
         Almacen max = new Almacen("SuperMercado MERCAMAX", "800.456.123-1");
         
+        Empleado worker = new Empleado(12345, "Fabio", "Mendez", "Fmendez", "FaMe123");
+        Producto item = new Producto("001", "RAM 4GB", 90000);
+        DetalleCompra detalle = new DetalleCompra(4,item);
+        Cliente customer = new Cliente(123456789, "Pol", "KER");
+        Compra instance = new Compra(customer);
+        max.add(worker);
+        max.add(customer);
+        max.add(item);
+        max.add(instance);
         
         
         Ventana w = new Ventana(max);
-       w.setVisible(true);
+        w.setVisible(true);
+        }catch(ObjectNotFoundException notFound){
+            notFound.printStackTrace();                    
+        }catch(Exception error){
+            error.printStackTrace();
+        }
+        
+       
        
     }
     

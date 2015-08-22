@@ -5,6 +5,7 @@
  */
 package supermecado;
 
+import java.awt.BorderLayout;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,11 +20,14 @@ import static org.junit.Assert.*;
  */
 public class CompraTest {
     
-    private Producto item = new Producto("001", "RAM 4GB", 95000);
+    private Producto item = new Producto("001", "RAM 4GB", 90000);
     private DetalleCompra detalle = new DetalleCompra(4,item);
     private Cliente customer = new Cliente(123456789, "Pol", "KER");
-    
+    private Compra instance = new Compra(customer);
+    private Date fecha = new Date();
+        
     public CompraTest() {
+        instance.add(detalle);
     }
     
     @BeforeClass
@@ -50,7 +54,7 @@ public class CompraTest {
         System.out.println("add");
         try{
 //        DetalleCompra detalle = null;
-        Compra instance = new Compra(customer);
+//        Compra instance = new Compra(customer);
         instance.add(detalle);
         }catch(Exception error){
         // TODO review the generated test code and remove the default call to fail.
@@ -65,12 +69,15 @@ public class CompraTest {
     @Test
     public void testPuntosCompra() {
         System.out.println("puntosCompra");
-        Compra instance = null;
-        int expResult = 0;
+        try{
+//        Compra instance = null;
+        int expResult = 36;
         int result = instance.puntosCompra();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        }catch(Exception error){
+        error.printStackTrace();
         fail("The test case is a prototype.");
+        }
     }
 
     /**
@@ -79,12 +86,16 @@ public class CompraTest {
     @Test
     public void testGetCliente() {
         System.out.println("getCliente");
-        Compra instance = null;
-        Cliente expResult = null;
+        try{
+        Cliente expResult = customer;
         Cliente result = instance.getCliente();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        }catch(Exception error){
+            error.printStackTrace();
+            fail("The test case is a prototype.");
+        }
+        
     }
 
     /**
@@ -93,12 +104,17 @@ public class CompraTest {
     @Test
     public void testGetFecha() {
         System.out.println("getFecha");
-        Compra instance = null;
-        Date expResult = null;
+        try{
+//        Compra instance = null;
+        Date expResult = fecha;
         Date result = instance.getFecha();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+    }catch(Exception error){
+            error.printStackTrace();
         fail("The test case is a prototype.");
+    }
+        
+        
     }
 
     /**
@@ -107,12 +123,17 @@ public class CompraTest {
     @Test
     public void testGetCostoTotal() {
         System.out.println("getCostoTotal");
-        Compra instance = null;
-        int expResult = 0;
+        try{
+//        Compra instance = null;
+        int expResult = 360000;
         int result = instance.getCostoTotal();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        }catch(Exception error){
+            error.printStackTrace();
+            fail("The test case is a prototype.");    
+        }
+        
     }
 
     /**
@@ -121,13 +142,16 @@ public class CompraTest {
     @Test
     public void testBuscar() throws Exception {
         System.out.println("buscar");
-        DetalleCompra detalle = null;
-        Compra instance = null;
-        DetalleCompra expResult = null;
+        try{
+//        DetalleCompra detalle = null;
+//        Compra instance = null;
+        DetalleCompra expResult = detalle;
         DetalleCompra result = instance.buscar(detalle);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        }catch(Exception error){
+        
         fail("The test case is a prototype.");
+        }
     }
 
     /**
@@ -136,13 +160,18 @@ public class CompraTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
+        try{
         Object obj = null;
-        Compra instance = null;
+//        Compra instance = null;
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        }catch(Exception error){
+        error.printStackTrace();                
         fail("The test case is a prototype.");
+    }
+        
+        
     }
     
 }

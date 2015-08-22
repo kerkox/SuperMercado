@@ -30,6 +30,32 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
+    public void clear() {
+        ClienteId.setText("");
+        ClienteName.setText("");
+        ClientePuntos.setText("");
+        ProductoCantidad.setText("");
+        ProductoCode.setText("");
+        ProductoCosto.setText("");
+        ProductoName.setText("");
+        CompraPuntos.setText("");
+        CompraTotal.setText("");
+    }
+
+    public void setLogeado(boolean login) {
+
+        ClienteId.setEditable(login);
+        ClienteName.setEditable(login);
+        ClientePuntos.setEditable(login);
+        ProductoCantidad.setEditable(login);
+        ProductoCode.setEditable(login);
+        ProductoCosto.setEditable(login);
+        ProductoName.setEditable(login);
+        CompraPuntos.setEditable(login);
+        CompraTotal.setEditable(login);
+
+    }
+
     public Ventana(Almacen market) {
         this.market = market;
         initComponents();
@@ -84,7 +110,7 @@ public class Ventana extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Login = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        LogOut = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -328,8 +354,13 @@ public class Ventana extends javax.swing.JFrame {
         });
         jMenu1.add(Login);
 
-        jMenuItem2.setText("Cerrar Sesión");
-        jMenu1.add(jMenuItem2);
+        LogOut.setText("Cerrar Sesión");
+        LogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogOutActionPerformed(evt);
+            }
+        });
+        jMenu1.add(LogOut);
 
         jMenuItem3.setText("Salir");
         jMenu1.add(jMenuItem3);
@@ -384,30 +415,42 @@ public class Ventana extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         try {
-            String loginEmpleado, passEmpleado;
-            Empleado empleado=null;
+            String loginEmpleado;
+            char[] passEmpleado;
+            Empleado empleado = null;
             loginEmpleado = JOptionPane.showInputDialog("Ingrese Login de Empleado: ");
-            
+
             empleado = this.market.BuscarEmpleado(loginEmpleado);
             JLabel label = new JLabel("Ingrese Password de Empleado: ");
             JPasswordField passIn = new JPasswordField();
-            
-             JOptionPane.showConfirmDialog(null,new Object[]{label,passIn},"Password: ",
-                     JOptionPane.OK_CANCEL_OPTION);
-                     passEmpleado = Arrays.toString(passIn.getPassword());
-            
-            if(empleado.getPassword().equals(passEmpleado)){
+
+            JOptionPane.showConfirmDialog(null, new Object[]{label, passIn}, "Password: ",
+                    JOptionPane.OK_CANCEL_OPTION);
+            passEmpleado = passIn.getPassword();
+
+            if (market.Logueo(loginEmpleado, passEmpleado)) {
                 logeado = true;
-            }else{
+                setLogeado(logeado);
+            } else {
                 JOptionPane.showMessageDialog(null, "Password Incorrecto");
             }
-            
+            if (logeado) {
+                vendedor.setText("Vendedor: " + empleado.getNombres() + " " + empleado.getApellidos());
+            } else {
+                vendedor.setText("Vendedor: No registrado");
+            }
+
         } catch (ObjectNotFoundException notFound) {
             JOptionPane.showMessageDialog(null, notFound.getMessage());
         } catch (Exception error) {
             JOptionPane.showMessageDialog(null, error.getMessage());
         }
     }//GEN-LAST:event_LoginActionPerformed
+
+    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
+        setLogeado(false);
+        clear();
+    }//GEN-LAST:event_LogOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,6 +495,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField ClientePuntos;
     private javax.swing.JTextField CompraPuntos;
     private javax.swing.JTextField CompraTotal;
+    private javax.swing.JMenuItem LogOut;
     private javax.swing.JMenuItem Login;
     private javax.swing.JTextField ProductoCantidad;
     private javax.swing.JTextField ProductoCode;
@@ -477,7 +521,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
