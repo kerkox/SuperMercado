@@ -35,8 +35,8 @@ public class Ventana extends javax.swing.JFrame {
     private DetalleCompra detail = null;
     private Producto item = null;
     private Compra buy = null;
-    private int puntos=0;
-    private Empleado empleado=null;
+    private int puntos = 0;
+    private Empleado empleado = null;
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
 
     public Ventana() {
@@ -54,6 +54,13 @@ public class Ventana extends javax.swing.JFrame {
         ProductoName.setText("");
         CompraPuntos.setText("");
         CompraTotal.setText("");
+    }
+
+    public void clearProducto() {
+        ProductoCantidad.setText("");
+        ProductoCode.setText("");
+        ProductoCosto.setText("");
+        ProductoName.setText("");
     }
 
     public void setLogeado(boolean login) {
@@ -92,10 +99,10 @@ public class Ventana extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, error.getMessage());
             }
         });
-        
+
         this.CompraTabla.setModel(new AbstractTableModel() {
 
-            private String[] nombres = {"Producto", "Costo Unitario", "Cantidad","Costo"};
+            private String[] nombres = {"Producto", "Costo Unitario", "Cantidad", "Costo"};
 
             @Override
             public String getColumnName(int column) {
@@ -161,7 +168,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         Registro = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Devolver = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CompraPuntos = new javax.swing.JTextField();
@@ -290,10 +297,10 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Devolver");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Devolver.setText("Devolver");
+        Devolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                DevolverActionPerformed(evt);
             }
         });
 
@@ -337,7 +344,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(Registro, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(Devolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -393,7 +400,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Registro)
-                    .addComponent(jButton3))
+                    .addComponent(Devolver))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -489,7 +496,7 @@ public class Ventana extends javax.swing.JFrame {
         try {
             String loginEmpleado;
             char[] passEmpleado;
-            
+
             loginEmpleado = JOptionPane.showInputDialog("Ingrese Login de Empleado: ");
 
             empleado = this.market.BuscarEmpleado(loginEmpleado.trim());
@@ -533,9 +540,9 @@ public class Ventana extends javax.swing.JFrame {
             customer = this.market.BuscarCliente(idCliente);
             ClienteName.setText(customer.getNombres() + " " + customer.getApellidos());
             ClientePuntos.setText(customer.getPuntos() + "");
-            Buscar.setEnabled(false); 
+            Buscar.setEnabled(false);
             ClienteId.setEditable(false);
-            buy = new Compra(customer,empleado); // Crecacion de Compra con un cliente
+            buy = new Compra(customer, empleado); // Crecacion de Compra con un cliente
         } catch (ObjectNotFoundException notFound) {
             JOptionPane.showMessageDialog(null, notFound.getMessage());
 
@@ -548,9 +555,9 @@ public class Ventana extends javax.swing.JFrame {
 
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
         String quantity = ProductoCantidad.getText().trim();
-        if(item==null){
-            JOptionPane.showMessageDialog(null,"No has introducido un Producto");
-        }else if (quantity.equals("")) {
+        if (item == null) {
+            JOptionPane.showMessageDialog(null, "No has introducido un Producto");
+        } else if (quantity.equals("")) {
             JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
         } else {
             //Aqui se creara el Detalle de Compra
@@ -560,33 +567,58 @@ public class Ventana extends javax.swing.JFrame {
             } else {
                 detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
 
-                
-                
                 buy.add(detail); //agregado a la lista el Detalle de compra
                 puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
-                CompraPuntos.setText(puntos+""); //Mostrando puntos compra actual
-                
+                CompraPuntos.setText(puntos + ""); //Mostrando puntos compra actual
+
                 detalleCompras = buy.getDetalleCompras();
-                CompraTotal.setText(buy.getCostoTotal()+"");
+                CompraTotal.setText(buy.getCostoTotal() + "");
                 CompraTabla.updateUI();
-                
-                detail=null; //liberando forzadamente 
-                
+
+                detail = null; //liberando forzadamente 
+                item = null;
+                clearProducto();
+
             }
 
         }
-        
+
     }//GEN-LAST:event_RegistroActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void DevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DevolverActionPerformed
         String quantity = ProductoCantidad.getText().trim();
-        if (quantity.equals("")) {
+        if (item == null) {
+            JOptionPane.showMessageDialog(null, "No has introducido un Producto");
+        } else if (quantity.equals("")) {
             JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
         } else {
-           //Aqui se Eliminara el Detalle de Compra
+            //Aqui se Eliminara el Detalle de Compra
+            int cantidad = Integer.parseInt(quantity);
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(null, "Cantidad de Productos Invalida");
+            } else {
+                detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
+                try {
+                    buy.remove(detail);
+                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
+                    CompraPuntos.setText(puntos + ""); //Mostrando puntos compra actual
+
+                    detalleCompras = buy.getDetalleCompras();
+                    CompraTotal.setText(buy.getCostoTotal() + "");
+                    CompraTabla.updateUI();
+
+                    detail = null; //liberando forzadamente 
+                    item = null;
+                    clearProducto();
+                } catch (ObjectNotFoundException notFound) {
+                    JOptionPane.showMessageDialog(null, notFound.getMessage());
+                } catch (Exception error) {
+                    JOptionPane.showMessageDialog(null, error.getMessage());
+                }
+            }
 
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_DevolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -633,6 +665,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField CompraPuntos;
     private javax.swing.JTable CompraTabla;
     private javax.swing.JTextField CompraTotal;
+    private javax.swing.JButton Devolver;
     private javax.swing.JMenuItem LogOut;
     private javax.swing.JMenuItem Login;
     private javax.swing.JFormattedTextField ProductoCantidad;
@@ -640,7 +673,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField ProductoCosto;
     private javax.swing.JTextField ProductoName;
     private javax.swing.JButton Registro;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

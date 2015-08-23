@@ -33,16 +33,38 @@ public class Compra {
     public void add(DetalleCompra detalle) {
         int pos=0;
         if(this.detalleCompras.contains(detalle)){
-            System.out.println("Esto sucedio porque fue igual");
+            
             pos= detalleCompras.indexOf(detalle);
             this.costoTotal -= detalleCompras.get(pos).CostoProducto(); //Se resta el coto del producto que hay
             detalleCompras.get(pos).IncrementarCantidad(detalle.cantidadProductos);
             this.costoTotal += detalleCompras.get(pos).CostoProducto(); //se ajusta al nuevo costo por el cambio de cantidad   
         }else{
-            System.out.println("Se agrego Normalmente ------");
+            
         detalleCompras.add(detalle);
         this.costoTotal += detalle.CostoProducto();
         }
+    }
+    
+    public void remove(DetalleCompra detalle)throws Exception{
+        int pos=0, cantidad=0;
+        if(this.detalleCompras.contains(detalle)){
+            pos= detalleCompras.indexOf(detalle);
+            //aqui se evalua la cantidad de productos a retirar
+            cantidad = detalleCompras.get(pos).cantidadProductos;
+            if(cantidad>detalle.cantidadProductos){
+                this.costoTotal -= detalleCompras.get(pos).CostoProducto(); //Se resta el coto del producto que hay
+                detalleCompras.get(pos).DecrementarCantidad(detalle.cantidadProductos);
+                this.costoTotal += detalleCompras.get(pos).CostoProducto(); //se ajusta al nuevo costo por el cambio de cantidad 
+            }else if(cantidad==detalle.cantidadProductos){
+                //aqui se remueve el objeto por completo
+                this.detalleCompras.remove(pos);
+            }else{
+                throw new Exception("Cantidad a devolver invalida");
+            }
+        }else{
+            throw new ObjectNotFoundException("El prodcuto a retirar no se encuentra en la compra");
+        }
+        
     }
     
     public int puntosCompra(){

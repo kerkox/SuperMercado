@@ -36,6 +36,10 @@ public class DetalleCompra {
     public void IncrementarCantidad(int cant){
         this.cantidadProductos +=cant;
     }
+    
+    public void DecrementarCantidad(int cant){
+        this.cantidadProductos -=cant;
+    }
 
    
 
