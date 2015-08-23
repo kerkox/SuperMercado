@@ -5,13 +5,16 @@
  */
 package GUI;
 
+import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import supermecado.Almacen;
+import supermecado.Cliente;
 import supermecado.Empleado;
 import supermecado.ObjectNotFoundException;
+import supermecado.Producto;
 
 /**
  *
@@ -23,6 +26,7 @@ public class Ventana extends javax.swing.JFrame {
      * Creates new form Ventana
      */
     private Almacen market = null;
+    private Cliente customer=null;
     private boolean logeado = false;
 
     public Ventana() {
@@ -62,6 +66,24 @@ public class Ventana extends javax.swing.JFrame {
 
         AlmacenName.setText(this.market.getNombre());
         AlmacenNit.setText(this.market.getNIT());
+        
+        //Agregado de Captura de evento al presionar enter para buscar
+        this.ProductoCode.addActionListener((ActionEvent e) -> {
+            try {
+                
+                Producto item = null;
+                item = this.market.BuscarProducto(ProductoCode.getText().trim());
+                ProductoName.setText(item.getNombre());
+                ProductoCosto.setText(item.getCostoUnitario()+"");
+               
+
+            } catch (ObjectNotFoundException notFound) {
+                JOptionPane.showMessageDialog(null, notFound.getMessage());
+
+            } catch (Exception error) {
+                JOptionPane.showMessageDialog(null, error.getMessage());
+            }
+        });
 
     }
 
@@ -82,10 +104,10 @@ public class Ventana extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        ClienteId = new javax.swing.JTextField();
         ClienteName = new javax.swing.JTextField();
         ClientePuntos = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Buscar = new javax.swing.JButton();
+        ClienteId = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ProductoCode = new javax.swing.JTextField();
@@ -138,13 +160,19 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel3.setText("Puntos:");
 
-        ClienteId.setEditable(false);
-
         ClienteName.setEditable(false);
 
         ClientePuntos.setEditable(false);
 
-        jButton1.setText("Buscar");
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
+
+        ClienteId.setEditable(false);
+        ClienteId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,10 +193,10 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(ClienteId)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
+                        .addComponent(Buscar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(ClientePuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 253, Short.MAX_VALUE))
                     .addComponent(ClienteName))
                 .addContainerGap())
         );
@@ -178,8 +206,8 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(ClienteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(Buscar)
+                    .addComponent(ClienteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -452,6 +480,28 @@ public class Ventana extends javax.swing.JFrame {
         clear();
     }//GEN-LAST:event_LogOutActionPerformed
 
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+
+        try {
+            Cliente customer = null;
+            long idCliente = Long.parseLong(ClienteId.getText().trim());
+
+            customer = this.market.BuscarCliente(idCliente);
+            ClienteName.setText(customer.getNombres() + " " + customer.getApellidos());
+            ClientePuntos.setText(customer.getPuntos() + "");
+
+        } catch (ObjectNotFoundException notFound) {
+            JOptionPane.showMessageDialog(null, notFound.getMessage());
+
+        } catch (Exception error) {
+            JOptionPane.showMessageDialog(null, error.getMessage());
+        }
+
+
+    }//GEN-LAST:event_BuscarActionPerformed
+    
+    
+
     /**
      * @param args the command line arguments
      */
@@ -490,7 +540,8 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AlmacenName;
     private javax.swing.JLabel AlmacenNit;
-    private javax.swing.JTextField ClienteId;
+    private javax.swing.JButton Buscar;
+    private javax.swing.JFormattedTextField ClienteId;
     private javax.swing.JTextField ClienteName;
     private javax.swing.JTextField ClientePuntos;
     private javax.swing.JTextField CompraPuntos;
@@ -501,7 +552,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField ProductoCode;
     private javax.swing.JTextField ProductoCosto;
     private javax.swing.JTextField ProductoName;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

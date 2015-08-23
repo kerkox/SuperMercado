@@ -17,7 +17,7 @@ public class SuperMecado {
         try{
         Almacen max = new Almacen("SuperMercado MERCAMAX", "800.456.123-1");
         
-        Empleado worker = new Empleado(12345, "Fabio", "Mendez", "Fmendez", "FaMe123");
+        Empleado worker = new Empleado(12345, "Fabio", "Mendez", "Fer", "F123");
         Producto item = new Producto("001", "RAM 4GB", 90000);
         DetalleCompra detalle = new DetalleCompra(4,item);
         Cliente customer = new Cliente(123456789, "Pol", "KER");
