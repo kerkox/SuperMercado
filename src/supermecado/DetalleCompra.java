@@ -29,6 +29,11 @@ public class DetalleCompra {
         return cantidadProductos;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
