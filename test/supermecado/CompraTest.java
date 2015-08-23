@@ -23,7 +23,8 @@ public class CompraTest {
     private Producto item = new Producto("001", "RAM 4GB", 90000);
     private DetalleCompra detalle = new DetalleCompra(4,item);
     private Cliente customer = new Cliente(123456789, "Pol", "KER");
-    private Compra instance = new Compra(customer);
+    private Empleado empleado = new Empleado(12345, "Fabio", "Mendez", "Fer", "F123");
+    private Compra instance = new Compra(customer,empleado);
     private Date fecha = new Date();
         
     public CompraTest() {

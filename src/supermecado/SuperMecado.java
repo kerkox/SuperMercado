@@ -21,11 +21,11 @@ public class SuperMecado {
         Producto item = new Producto("001", "RAM 4GB", 90000);
         DetalleCompra detalle = new DetalleCompra(4,item);
         Cliente customer = new Cliente(123456789, "Pol", "KER");
-        Compra instance = new Compra(customer);
+        
         max.add(worker);
         max.add(customer);
         max.add(item);
-        max.add(instance);
+        
         
         
         Ventana w = new Ventana(max);

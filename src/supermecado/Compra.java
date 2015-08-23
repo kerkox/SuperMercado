@@ -21,17 +21,28 @@ public class Compra {
     private Empleado empleado;
     private Date fecha = new Date();
 
-    public Compra(Cliente cliente) {
+    public Compra(Cliente cliente, Empleado vendedor) {
         
         this.cliente = cliente;
+        this.empleado = vendedor;
     }
     /**
      * Metodo para agregar Detalle de compra
      * @param detalle objeto tipo DetalleCompra
      */
     public void add(DetalleCompra detalle) {
+        int pos=0;
+        if(this.detalleCompras.contains(detalle)){
+            System.out.println("Esto sucedio porque fue igual");
+            pos= detalleCompras.indexOf(detalle);
+            this.costoTotal -= detalleCompras.get(pos).CostoProducto(); //Se resta el coto del producto que hay
+            detalleCompras.get(pos).IncrementarCantidad(detalle.cantidadProductos);
+            this.costoTotal += detalleCompras.get(pos).CostoProducto(); //se ajusta al nuevo costo por el cambio de cantidad   
+        }else{
+            System.out.println("Se agrego Normalmente ------");
         detalleCompras.add(detalle);
         this.costoTotal += detalle.CostoProducto();
+        }
     }
     
     public int puntosCompra(){
@@ -56,6 +67,16 @@ public class Compra {
     public int getCostoTotal() {
         return costoTotal;
     }
+
+    public ArrayList<DetalleCompra> getDetalleCompras() {
+        return detalleCompras;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+    
+    
     
     /**
      * 

@@ -35,11 +35,7 @@ public class Producto {
         return costoUnitario;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
+  
 
     @Override
     public boolean equals(Object obj) {
@@ -55,6 +51,10 @@ public class Producto {
         }
         return true;
     }
+
+   
+
+    
 
     @Override
     public String toString() {

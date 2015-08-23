@@ -33,6 +33,11 @@ public class DetalleCompra {
         return producto;
     }
     
+    public void IncrementarCantidad(int cant){
+        this.cantidadProductos +=cant;
+    }
+
+   
 
     @Override
     public boolean equals(Object obj) {
@@ -43,14 +48,13 @@ public class DetalleCompra {
             return false;
         }
         final DetalleCompra other = (DetalleCompra) obj;
-        if (this.cantidadProductos != other.cantidadProductos) {
-            return false;
-        }
         if (!Objects.equals(this.producto, other.producto)) {
             return false;
         }
         return true;
     }
+
+    
 
  
     

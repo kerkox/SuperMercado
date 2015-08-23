@@ -36,6 +36,7 @@ public class Ventana extends javax.swing.JFrame {
     private Producto item = null;
     private Compra buy = null;
     private int puntos=0;
+    private Empleado empleado=null;
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
 
     public Ventana() {
@@ -488,7 +489,7 @@ public class Ventana extends javax.swing.JFrame {
         try {
             String loginEmpleado;
             char[] passEmpleado;
-            Empleado empleado = null;
+            
             loginEmpleado = JOptionPane.showInputDialog("Ingrese Login de Empleado: ");
 
             empleado = this.market.BuscarEmpleado(loginEmpleado.trim());
@@ -534,6 +535,7 @@ public class Ventana extends javax.swing.JFrame {
             ClientePuntos.setText(customer.getPuntos() + "");
             Buscar.setEnabled(false); 
             ClienteId.setEditable(false);
+            buy = new Compra(customer,empleado); // Crecacion de Compra con un cliente
         } catch (ObjectNotFoundException notFound) {
             JOptionPane.showMessageDialog(null, notFound.getMessage());
 
@@ -546,7 +548,9 @@ public class Ventana extends javax.swing.JFrame {
 
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
         String quantity = ProductoCantidad.getText().trim();
-        if (quantity.equals("")) {
+        if(item==null){
+            JOptionPane.showMessageDialog(null,"No has introducido un Producto");
+        }else if (quantity.equals("")) {
             JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
         } else {
             //Aqui se creara el Detalle de Compra
@@ -556,18 +560,22 @@ public class Ventana extends javax.swing.JFrame {
             } else {
                 detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
 
-                buy = new Compra(customer); // Crecacion de Compra con un cliente
+                
+                
                 buy.add(detail); //agregado a la lista el Detalle de compra
-                puntos += buy.puntosCompra(); //Calculo de puntos en la compra actual
+                puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
                 CompraPuntos.setText(puntos+""); //Mostrando puntos compra actual
-                detalleCompras.add(detail);
+                
+                detalleCompras = buy.getDetalleCompras();
                 CompraTotal.setText(buy.getCostoTotal()+"");
                 CompraTabla.updateUI();
                 
+                detail=null; //liberando forzadamente 
                 
             }
 
         }
+        
     }//GEN-LAST:event_RegistroActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
