@@ -41,6 +41,12 @@ public class Almacen {
        
         return log;
     }
+
+    public ArrayList<Compra> getCompras() {
+        return compras;
+    }
+    
+    
     //*******************************    
     // Agregado de obejtos a las listas correspondientes
     

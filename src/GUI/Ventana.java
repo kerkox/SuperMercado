@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,7 @@ public class Ventana extends javax.swing.JFrame {
     private int puntos = 0;
     private Empleado empleado = null;
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
+    private ArrayList<Compra> Compras = new ArrayList<>();
 
     public Ventana() {
         initComponents();
@@ -49,7 +51,12 @@ public class Ventana extends javax.swing.JFrame {
     public void inicio(){
         clear();
         this.Buscar.setEnabled(true);
+         buy = null;
+        item = null;
+        this.detalleCompras = new ArrayList<>();
+        CompraTabla.updateUI();
         ClienteId.setEditable(logeado);
+        
     }
     public void clear() {
         ClienteId.setText("");
@@ -143,6 +150,42 @@ public class Ventana extends javax.swing.JFrame {
                 return "";
             }
         });
+        this.Ventas.setModel(new AbstractTableModel(){
+            private String[] nombres ={"Vendedor","Cliente","Costo","Puntos Otorgados"};
+
+            @Override
+            public String getColumnName(int column){
+                return this.nombres[column];
+            }
+            
+            
+            @Override
+            public int getRowCount() {
+                return Compras.size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return this.nombres.length;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                Compra purchase = Compras.get(rowIndex);
+                switch(columnIndex){
+                    case 0:
+                        return purchase.getEmpleado().getNombres()+" "+purchase.getEmpleado().getApellidos();
+                    case 1:
+                        return purchase.getCliente().getNombres()+" "+purchase.getCliente().getApellidos();
+                    case 2:
+                        return purchase.getCostoTotal();
+                    case 3:
+                        return purchase.puntosCompra();
+                }
+                return "";
+            }
+            
+        });
 
     }
 
@@ -157,16 +200,23 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel10 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        VentasRealizadas = new javax.swing.JFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Ventas = new javax.swing.JTable();
+        about = new javax.swing.JFrame();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         AlmacenName = new javax.swing.JLabel();
         AlmacenNit = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ClienteName = new javax.swing.JTextField();
         ClientePuntos = new javax.swing.JTextField();
         Buscar = new javax.swing.JButton();
         ClienteId = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ProductoCode = new javax.swing.JTextField();
@@ -192,8 +242,7 @@ public class Ventana extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         Login = new javax.swing.JMenuItem();
         LogOut = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        ShowVentas = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
 
@@ -201,7 +250,79 @@ public class Ventana extends javax.swing.JFrame {
 
         jButton4.setText("jButton4");
 
+        VentasRealizadas.setTitle("Ventas Realizadas");
+        VentasRealizadas.setMinimumSize(new java.awt.Dimension(500, 300));
+        VentasRealizadas.setPreferredSize(new java.awt.Dimension(500, 300));
+
+        Ventas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(Ventas);
+
+        javax.swing.GroupLayout VentasRealizadasLayout = new javax.swing.GroupLayout(VentasRealizadas.getContentPane());
+        VentasRealizadas.getContentPane().setLayout(VentasRealizadasLayout);
+        VentasRealizadasLayout.setHorizontalGroup(
+            VentasRealizadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VentasRealizadasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        VentasRealizadasLayout.setVerticalGroup(
+            VentasRealizadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentasRealizadasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        about.setMinimumSize(new java.awt.Dimension(300, 130));
+        about.setResizable(false);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Acerca de este Software");
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Este Software Fue diseñado por Polker");
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Todos los derechos reservados - 2015 ");
+
+        javax.swing.GroupLayout aboutLayout = new javax.swing.GroupLayout(about.getContentPane());
+        about.getContentPane().setLayout(aboutLayout);
+        aboutLayout.setHorizontalGroup(
+            aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aboutLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        aboutLayout.setVerticalGroup(
+            aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(aboutLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Software - SuperMercado");
         setMinimumSize(new java.awt.Dimension(543, 557));
 
         AlmacenName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -213,8 +334,6 @@ public class Ventana extends javax.swing.JFrame {
         AlmacenNit.setText("Nit 1.233544");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
-
-        jLabel1.setText("identificación:");
 
         jLabel2.setText("Nombre:");
 
@@ -234,28 +353,25 @@ public class Ventana extends javax.swing.JFrame {
         ClienteId.setEditable(false);
         ClienteId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
+        jLabel12.setText("Identificacion:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel12))
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ClienteName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(ClienteId)
+                                .addComponent(ClienteId, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(Buscar)))
                         .addGap(4, 4, 4))
@@ -268,9 +384,9 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(Buscar)
-                    .addComponent(ClienteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ClienteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -452,17 +568,24 @@ public class Ventana extends javax.swing.JFrame {
         });
         jMenu1.add(LogOut);
 
-        jMenuItem5.setText("Mostrar Ventas");
-        jMenu1.add(jMenuItem5);
-
-        jMenuItem3.setText("Salir");
-        jMenu1.add(jMenuItem3);
+        ShowVentas.setText("Mostrar Ventas");
+        ShowVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowVentasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ShowVentas);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ayuda");
 
         jMenuItem4.setText("Acerca de...");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -540,8 +663,10 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_LoginActionPerformed
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
-        setLogeado(false);
-        clear();
+        this.logeado=false;
+        setLogeado(logeado);
+        this.vendedor.setText("Vendedor: No Registrado");
+        inicio();
         buy = null;
         item = null;
         this.detalleCompras = new ArrayList<>();
@@ -675,12 +800,24 @@ public class Ventana extends javax.swing.JFrame {
 
     private void RegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVentaActionPerformed
         try {
+            customer.incrementarPuntos(buy.puntosCompra());
             this.market.add(buy);
+            this.Compras = this.market.getCompras(); 
+            this.Ventas.updateUI();
             inicio();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_RegistrarVentaActionPerformed
+
+    private void ShowVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowVentasActionPerformed
+       this.VentasRealizadas.setVisible(true);
+       
+    }//GEN-LAST:event_ShowVentasActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        this.about.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -736,11 +873,18 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField ProductoName;
     private javax.swing.JButton RegistrarVenta;
     private javax.swing.JButton Registro;
+    private javax.swing.JMenuItem ShowVentas;
+    private javax.swing.JTable Ventas;
+    private javax.swing.JFrame VentasRealizadas;
+    private javax.swing.JFrame about;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -752,12 +896,11 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel vendedor;
     // End of variables declaration//GEN-END:variables
 }
