@@ -235,7 +235,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         CompraTotal = new javax.swing.JTextField();
         RegistrarVenta = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        Cancelar = new javax.swing.JButton();
         ProductoCantidad = new javax.swing.JFormattedTextField();
         vendedor = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -252,7 +252,6 @@ public class Ventana extends javax.swing.JFrame {
 
         VentasRealizadas.setTitle("Ventas Realizadas");
         VentasRealizadas.setMinimumSize(new java.awt.Dimension(500, 300));
-        VentasRealizadas.setPreferredSize(new java.awt.Dimension(500, 300));
 
         Ventas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -457,7 +456,12 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText("Cancelar Venta");
+        Cancelar.setText("Cancelar Venta");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
 
         ProductoCantidad.setEditable(false);
         ProductoCantidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
@@ -508,7 +512,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(RegistrarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -544,7 +548,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RegistrarVenta)
-                    .addComponent(jButton6))
+                    .addComponent(Cancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -799,6 +803,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_DevolverActionPerformed
 
     private void RegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVentaActionPerformed
+        if(this.logeado){
         try {
             customer.incrementarPuntos(buy.puntosCompra());
             this.market.add(buy);
@@ -807,6 +812,7 @@ public class Ventana extends javax.swing.JFrame {
             inicio();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
         }
     }//GEN-LAST:event_RegistrarVentaActionPerformed
 
@@ -818,6 +824,11 @@ public class Ventana extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         this.about.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        inicio();
+        
+    }//GEN-LAST:event_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -858,6 +869,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel AlmacenName;
     private javax.swing.JLabel AlmacenNit;
     private javax.swing.JButton Buscar;
+    private javax.swing.JButton Cancelar;
     private javax.swing.JFormattedTextField ClienteId;
     private javax.swing.JTextField ClienteName;
     private javax.swing.JTextField ClientePuntos;
@@ -878,7 +890,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JFrame VentasRealizadas;
     private javax.swing.JFrame about;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
