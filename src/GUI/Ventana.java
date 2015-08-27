@@ -33,15 +33,16 @@ public class Ventana extends javax.swing.JFrame {
      * Creates new form Ventana
      */
     private Almacen market = null;
-    private Cliente customer = null;
+//    private Cliente customer = null; 
     private boolean logeado = false;
-    private DetalleCompra detail = null;
+    private boolean ClientAlive = false;
+//    private DetalleCompra detail = null;
     private Producto item = null;
     private Compra buy = null;
-    private int puntos = 0;
+//    private int puntos = 0;
     private Empleado empleado = null;
-    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
-    private ArrayList<Compra> Compras = new ArrayList<>();
+    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>(); //error al iniciar la GUI por nullPointerException
+//    private ArrayList<Compra> Compras = new ArrayList<>();
 
     public Ventana() {
         initComponents();
@@ -53,9 +54,10 @@ public class Ventana extends javax.swing.JFrame {
         this.Buscar.setEnabled(true);
          buy = null;
         item = null;
-        this.detalleCompras = new ArrayList<>();
+        this.detalleCompras = new ArrayList<>(); // para actualizar la GUI **********
         CompraTabla.updateUI();
         ClienteId.setEditable(logeado);
+        this.ClientAlive=false;
         
     }
     public void clear() {
@@ -126,6 +128,7 @@ public class Ventana extends javax.swing.JFrame {
 
             @Override
             public int getRowCount() {
+//                return buy.getDetalleCompras().size();
                 return detalleCompras.size();
             }
 
@@ -136,6 +139,7 @@ public class Ventana extends javax.swing.JFrame {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
+//                DetalleCompra detalle = buy.getDetalleCompras().get(rowIndex);
                 DetalleCompra detalle = detalleCompras.get(rowIndex);
                 switch (columnIndex) {
                     case 0:
@@ -161,7 +165,7 @@ public class Ventana extends javax.swing.JFrame {
             
             @Override
             public int getRowCount() {
-                return Compras.size();
+                return market.getCompras().size();
             }
 
             @Override
@@ -171,7 +175,7 @@ public class Ventana extends javax.swing.JFrame {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                Compra purchase = Compras.get(rowIndex);
+                Compra purchase = market.getCompras().get(rowIndex);
                 switch(columnIndex){
                     case 0:
                         return purchase.getEmpleado().getNombres()+" "+purchase.getEmpleado().getApellidos();
@@ -668,27 +672,33 @@ public class Ventana extends javax.swing.JFrame {
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         this.logeado=false;
+        this.ClientAlive=false;
         setLogeado(logeado);
         this.vendedor.setText("Vendedor: No Registrado");
         inicio();
         buy = null;
         item = null;
-        this.detalleCompras = new ArrayList<>();
+        this.detalleCompras = new ArrayList<>(); // para liberar la lista de Detalle de compras al salir de la sesion
         CompraTabla.updateUI();
     }//GEN-LAST:event_LogOutActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         if (this.logeado) {
             try {
-
+                
+                if(ClienteId.getText().trim().equals("")){
+                    throw new Exception("El campo de id de Cliente no puede estar vacio");
+                }
                 long idCliente = Long.parseLong(ClienteId.getText().trim());
 
-                customer = this.market.BuscarCliente(idCliente);
-                ClienteName.setText(customer.getNombres() + " " + customer.getApellidos());
-                ClientePuntos.setText(customer.getPuntos() + "");
+                buy = new Compra(this.market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+//                customer = this.market.BuscarCliente(idCliente);
+                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
+                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
                 Buscar.setEnabled(false);
                 ClienteId.setEditable(false);
-                buy = new Compra(customer, empleado); // Crecacion de Compra con un cliente
+                this.ClientAlive = true;
+                
             } catch (ObjectNotFoundException notFound) {
                 JOptionPane.showMessageDialog(null, notFound.getMessage());
 
@@ -700,7 +710,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
-        if (this.logeado) {
+        if (this.logeado&&this.ClientAlive) {
             String quantity = ProductoCantidad.getText().trim();
             if (item == null) {
                 JOptionPane.showMessageDialog(null, "No has introducido un Producto");
@@ -712,17 +722,17 @@ public class Ventana extends javax.swing.JFrame {
                 if (cantidad <= 0) {
                     JOptionPane.showMessageDialog(null, "Cantidad de Productos Invalida");
                 } else {
-                    detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
+//                    detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
 
-                    buy.add(detail); //agregado a la lista el Detalle de compra
-                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
-                    CompraPuntos.setText(puntos + ""); //Mostrando puntos compra actual
+                    buy.add(new DetalleCompra(cantidad, item)); //agregado a la lista el Detalle de compra
+//                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
+                    CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
 
-                    detalleCompras = buy.getDetalleCompras();
+                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
                     CompraTotal.setText(buy.getCostoTotal() + "");
                     CompraTabla.updateUI();
 
-                    detail = null; //liberando forzadamente 
+//                    detail = null; //liberando forzadamente 
                     item = null;
                     clearProducto();
 
@@ -734,27 +744,27 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_RegistroActionPerformed
 
     private void DevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DevolverActionPerformed
-        if (this.logeado) {
-            detail = null;
+        if (this.logeado&&this.ClientAlive) {
+            DetalleCompra detail = null;
             String quantity = ProductoCantidad.getText().trim();
 
         //*******************************
             //Selecionando el producto de la tabla
-            if (this.detalleCompras.size() == 1) {
-                detail = this.detalleCompras.get(0);
+            if (buy.getDetalleCompras().size() == 1) {
+                detail = buy.getDetalleCompras().get(0);
             } else {
                 int index = 0;
                 index = CompraTabla.getSelectedRow(); //obtiene el numero de la fila del elemnto a devolver
-                detail = this.detalleCompras.get(index);
+                detail = buy.getDetalleCompras().get(index);
             }
             try {
                 buy.remove(detail);
-                puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
-                CompraPuntos.setText(puntos + ""); //Mostrando puntos compra actual
-                detalleCompras = buy.getDetalleCompras();
+//                puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
+                CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
+                detalleCompras = buy.getDetalleCompras(); // para poder actualizar la GUI **********
                 CompraTotal.setText(buy.getCostoTotal() + "");
                 CompraTabla.updateUI();
-                detail = null; //liberando forzadamente 
+//                detail = null; //liberando forzadamente //ya no se usa porque solo es local
                 item = null;
                 clearProducto();
                 CompraTabla.clearSelection();
@@ -803,11 +813,11 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_DevolverActionPerformed
 
     private void RegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVentaActionPerformed
-        if(this.logeado){
+        if(this.logeado&&this.ClientAlive){
         try {
-            customer.incrementarPuntos(buy.puntosCompra());
+            buy.getCliente().incrementarPuntos(buy.puntosCompra());
             this.market.add(buy);
-            this.Compras = this.market.getCompras(); 
+//            this.Compras = this.market.getCompras(); 
             this.Ventas.updateUI();
             inicio();
         } catch (Exception ex) {

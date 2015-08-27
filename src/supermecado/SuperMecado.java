@@ -46,6 +46,9 @@ public class SuperMecado {
         
         Ventana w = new Ventana(max);
         w.setVisible(true);
+        
+        
+        
         }catch(ObjectNotFoundException notFound){
             notFound.printStackTrace();                    
         }catch(Exception error){
