@@ -27,24 +27,25 @@ import supermecado.Producto;
  *
  * @author Polker
  */
-public class Ventana extends javax.swing.JFrame {
+public class Venta extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Ventana
+     * Creates new form Venta
      */
     private Almacen market = null;
 //    private Cliente customer = null; 
-    private boolean logeado = false;
-    private boolean ClientAlive = false;
+    public boolean logeado = false;
+    public boolean ClientAlive = false;
 //    private DetalleCompra detail = null;
     private Producto item = null;
     private Compra buy = null;
 //    private int puntos = 0;
     private Empleado empleado = null;
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>(); //error al iniciar la GUI por nullPointerException
+    //una solucion puede ser en la clase compra permitir crear una compra sin parametros
 //    private ArrayList<Compra> Compras = new ArrayList<>();
 
-    public Ventana() {
+    public Venta() {
         initComponents();
 
     }
@@ -79,6 +80,11 @@ public class Ventana extends javax.swing.JFrame {
         ProductoName.setText("");
     }
 
+    /**
+     * 
+     * @param login  recibe un valor boolenao
+     * Pero hay que mejorarlo para que tome el valor del booleano de la clase
+     */
     public void setLogeado(boolean login) {
 
         ClienteId.setEditable(login);
@@ -94,10 +100,11 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    public Ventana(Almacen market) {
+    public Venta(Almacen market) {
         this.market = market;
+        this.logeado = this.market.log;
         initComponents();
-
+        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
         AlmacenName.setText(this.market.getNombre());
         AlmacenNit.setText(this.market.getNIT());
 
@@ -154,42 +161,42 @@ public class Ventana extends javax.swing.JFrame {
                 return "";
             }
         });
-        this.Ventas.setModel(new AbstractTableModel(){
-            private String[] nombres ={"Vendedor","Cliente","Costo","Puntos Otorgados"};
-
-            @Override
-            public String getColumnName(int column){
-                return this.nombres[column];
-            }
-            
-            
-            @Override
-            public int getRowCount() {
-                return market.getCompras().size();
-            }
-
-            @Override
-            public int getColumnCount() {
-                return this.nombres.length;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                Compra purchase = market.getCompras().get(rowIndex);
-                switch(columnIndex){
-                    case 0:
-                        return purchase.getEmpleado().getNombres()+" "+purchase.getEmpleado().getApellidos();
-                    case 1:
-                        return purchase.getCliente().getNombres()+" "+purchase.getCliente().getApellidos();
-                    case 2:
-                        return purchase.getCostoTotal();
-                    case 3:
-                        return purchase.puntosCompra();
-                }
-                return "";
-            }
-            
-        });
+//        this.Ventas.setModel(new AbstractTableModel(){
+//            private String[] nombres ={"Vendedor","Cliente","Costo","Puntos Otorgados"};
+//
+//            @Override
+//            public String getColumnName(int column){
+//                return this.nombres[column];
+//            }
+//            
+//            
+//            @Override
+//            public int getRowCount() {
+//                return market.getCompras().size();
+//            }
+//
+//            @Override
+//            public int getColumnCount() {
+//                return this.nombres.length;
+//            }
+//
+//            @Override
+//            public Object getValueAt(int rowIndex, int columnIndex) {
+//                Compra purchase = market.getCompras().get(rowIndex);
+//                switch(columnIndex){
+//                    case 0:
+//                        return purchase.getEmpleado().getNombres()+" "+purchase.getEmpleado().getApellidos();
+//                    case 1:
+//                        return purchase.getCliente().getNombres()+" "+purchase.getCliente().getApellidos();
+//                    case 2:
+//                        return purchase.getCostoTotal();
+//                    case 3:
+//                        return purchase.puntosCompra();
+//                }
+//                return "";
+//            }
+//            
+//        });
 
     }
 
@@ -731,6 +738,7 @@ public class Ventana extends javax.swing.JFrame {
                     detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
                     CompraTotal.setText(buy.getCostoTotal() + "");
                     CompraTabla.updateUI();
+                    
 
 //                    detail = null; //liberando forzadamente 
                     item = null;
@@ -818,7 +826,7 @@ public class Ventana extends javax.swing.JFrame {
             buy.getCliente().incrementarPuntos(buy.puntosCompra());
             this.market.add(buy);
 //            this.Compras = this.market.getCompras(); 
-            this.Ventas.updateUI();
+//            this.Ventas.updateUI();
             inicio();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -827,7 +835,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_RegistrarVentaActionPerformed
 
     private void ShowVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowVentasActionPerformed
-       this.VentasRealizadas.setVisible(true);
+//       this.VentasRealizadas.setVisible(true);
        
     }//GEN-LAST:event_ShowVentasActionPerformed
 
@@ -857,48 +865,48 @@ public class Ventana extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventana().setVisible(true);
+                new Venta().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel AlmacenName;
-    private javax.swing.JLabel AlmacenNit;
-    private javax.swing.JButton Buscar;
-    private javax.swing.JButton Cancelar;
-    private javax.swing.JFormattedTextField ClienteId;
-    private javax.swing.JTextField ClienteName;
-    private javax.swing.JTextField ClientePuntos;
-    private javax.swing.JTextField CompraPuntos;
-    private javax.swing.JTable CompraTabla;
-    private javax.swing.JTextField CompraTotal;
-    private javax.swing.JButton Devolver;
+    public javax.swing.JLabel AlmacenName;
+    public javax.swing.JLabel AlmacenNit;
+    public javax.swing.JButton Buscar;
+    public javax.swing.JButton Cancelar;
+    public javax.swing.JFormattedTextField ClienteId;
+    public javax.swing.JTextField ClienteName;
+    public javax.swing.JTextField ClientePuntos;
+    public javax.swing.JTextField CompraPuntos;
+    public javax.swing.JTable CompraTabla;
+    public javax.swing.JTextField CompraTotal;
+    public javax.swing.JButton Devolver;
     private javax.swing.JMenuItem LogOut;
     private javax.swing.JMenuItem Login;
-    private javax.swing.JFormattedTextField ProductoCantidad;
-    private javax.swing.JTextField ProductoCode;
-    private javax.swing.JTextField ProductoCosto;
-    private javax.swing.JTextField ProductoName;
-    private javax.swing.JButton RegistrarVenta;
-    private javax.swing.JButton Registro;
+    public javax.swing.JFormattedTextField ProductoCantidad;
+    public javax.swing.JTextField ProductoCode;
+    public javax.swing.JTextField ProductoCosto;
+    public javax.swing.JTextField ProductoName;
+    public javax.swing.JButton RegistrarVenta;
+    public javax.swing.JButton Registro;
     private javax.swing.JMenuItem ShowVentas;
     private javax.swing.JTable Ventas;
     private javax.swing.JFrame VentasRealizadas;
-    private javax.swing.JFrame about;
+    public javax.swing.JFrame about;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -918,10 +926,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel vendedor;
+    public javax.swing.JLabel vendedor;
     // End of variables declaration//GEN-END:variables
 }

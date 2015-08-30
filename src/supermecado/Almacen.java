@@ -20,6 +20,8 @@ public class Almacen {
     private ArrayList<Empleado> empleados = new ArrayList<>();
     private ArrayList<Cliente> clientes = new ArrayList<>();
     private ArrayList<Compra> compras = new ArrayList<>();
+    public Empleado logueado;
+    public boolean log = false;
 
     public Almacen(String nombre, String NIT) {
         this.nombre = nombre;
@@ -27,7 +29,7 @@ public class Almacen {
     }
 
     public boolean Logueo(String user, char[] pass)throws Exception{
-        boolean log = false;
+        
         Empleado worker = BuscarEmpleado(user);
         String checker="", passOk=worker.getPassword();
         for(int x=0;x<pass.length;x++){
@@ -37,12 +39,14 @@ public class Almacen {
         
         if(passOk.equals(checker)){
             log=true;
+            this.logueado = worker;
         }
        
         return log;
     }
 
     public ArrayList<Compra> getCompras() {
+        
         return compras;
     }
     
