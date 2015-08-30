@@ -30,7 +30,7 @@ public class Principal extends javax.swing.JFrame {
      */
     private Venta ventana1 = null;
     private Almacen market = null;
-    private VentasRealizadas tablaVentas = null;
+//    private VentasRealizadas tablaVentas = null;
 //    private Cliente customer = null; 
     public boolean logeado = false;
     private boolean ClientAlive = false;
@@ -69,6 +69,24 @@ public class Principal extends javax.swing.JFrame {
         this.market = market;
 
         initComponents();
+        
+        this.ShowVentas.addActionListener(new ActionListener(){
+        private VentasRealizadas vr = null;
+
+            
+            public void actionPerformed(ActionEvent e) {
+            if(this.vr==null){
+                this.vr = new VentasRealizadas(market);
+                Desktop.add(this.vr);
+                
+            }
+            this.vr.setVisible(true);
+                
+                
+            }
+        
+        
+    });
 
         ListenerLogueo log = new ListenerLogueo();
         this.Password.addActionListener(log);
@@ -97,13 +115,13 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void showVentas() {
-        if (this.tablaVentas == null) {
-            
-            this.tablaVentas = new VentasRealizadas(market);
-            Desktop.add(tablaVentas);
-        }
-
-        this.tablaVentas.setVisible(true);
+//        if (this.tablaVentas == null) {
+//            
+//            this.tablaVentas = new VentasRealizadas(market);
+//            Desktop.add(tablaVentas);
+//        }
+//
+//        this.tablaVentas.setVisible(true);
 //        this.tablaVentas.RefreshUI();
     }
 
@@ -175,7 +193,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(User)
                         .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(access, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(access, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         PanelLoginLayout.setVerticalGroup(
@@ -274,6 +292,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         this.market.log = false;
+        this.market.logueado = null;
         this.logeado = false;
         this.ClientAlive = false;
         setLogeado(logeado);
@@ -287,7 +306,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_LogOutActionPerformed
 
     private void ShowVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowVentasActionPerformed
-        showVentas();
+//        showVentas();
 
     }//GEN-LAST:event_ShowVentasActionPerformed
 
@@ -393,6 +412,7 @@ public class ListenerLogueo implements ActionListener {
                     clear();
                     PanelLogin.setVisible(false);
                     setLogeado(market.log);
+                    
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Password Incorrecto");

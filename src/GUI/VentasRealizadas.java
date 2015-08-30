@@ -26,10 +26,15 @@ public class VentasRealizadas extends javax.swing.JInternalFrame {
     
    
     
+    public VentasRealizadas(){
+        initComponents();
+    }
+    
     public VentasRealizadas(Almacen shop) {
         
         this.market = shop;
         initComponents();
+        
         this.addInternalFrameListener(new InternalFrameAdapter() {
 
             @Override
@@ -64,6 +69,7 @@ public class VentasRealizadas extends javax.swing.JInternalFrame {
                 Compra purchase = compras.get(rowIndex);
                 switch(columnIndex){
                     case 0:
+//                        return "Datos Empleado";
                         return purchase.getEmpleado().getNombres()+" "+purchase.getEmpleado().getApellidos();
                     case 1:
                         return purchase.getCliente().getNombres()+" "+purchase.getCliente().getApellidos();
@@ -90,15 +96,23 @@ public class VentasRealizadas extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         Ventas = new javax.swing.JTable();
 
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Ventas Realizadas");
+        setToolTipText("Ventas Realizadas");
+        setMinimumSize(new java.awt.Dimension(450, 400));
+
         Ventas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1"
             }
         ));
         jScrollPane2.setViewportView(Ventas);

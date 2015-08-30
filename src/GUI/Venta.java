@@ -7,6 +7,7 @@ package GUI;
 
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -96,18 +97,30 @@ public class Venta extends javax.swing.JInternalFrame {
 //        ProductoName.setEditable(login);
 //        CompraPuntos.setEditable(login);
 //        CompraTotal.setEditable(login);
+        
         Buscar.setEnabled(login);
-
+        if(this.market.logueado==null){
+            vendedor.setText("Vendedor:  No Registrado");
+        }else{
+            empleado = this.market.logueado;
+        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
+        }
     }
 
     public Venta(Almacen market) {
         this.market = market;
         this.logeado = this.market.log;
         initComponents();
-        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
+        
         AlmacenName.setText(this.market.getNombre());
         AlmacenNit.setText(this.market.getNIT());
 
+        //Evento para la busqueda de un cliente con el boton o Enter
+        ListenerBuscarCliente lbc = new ListenerBuscarCliente();
+        this.ClienteId.addActionListener(lbc);
+        this.Buscar.addActionListener(lbc);
+        //*****************************************
+        
         //Agregado de Captura de evento al presionar enter para buscar
         this.ProductoCode.addActionListener((ActionEvent e) -> {
             try {
@@ -249,13 +262,6 @@ public class Venta extends javax.swing.JInternalFrame {
         Cancelar = new javax.swing.JButton();
         ProductoCantidad = new javax.swing.JFormattedTextField();
         vendedor = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        Login = new javax.swing.JMenuItem();
-        LogOut = new javax.swing.JMenuItem();
-        ShowVentas = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
 
         jLabel10.setText("jLabel10");
 
@@ -331,7 +337,7 @@ public class Venta extends javax.swing.JInternalFrame {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Software - SuperMercado");
         setMinimumSize(new java.awt.Dimension(543, 557));
 
@@ -565,48 +571,6 @@ public class Venta extends javax.swing.JInternalFrame {
 
         vendedor.setText("Vendedor: No Registrado");
 
-        jMenu1.setText("Aplicación");
-
-        Login.setText("Iniciar Sesión");
-        Login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
-            }
-        });
-        jMenu1.add(Login);
-
-        LogOut.setText("Cerrar Sesión");
-        LogOut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LogOutActionPerformed(evt);
-            }
-        });
-        jMenu1.add(LogOut);
-
-        ShowVentas.setText("Mostrar Ventas");
-        ShowVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ShowVentasActionPerformed(evt);
-            }
-        });
-        jMenu1.add(ShowVentas);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Ayuda");
-
-        jMenuItem4.setText("Acerca de...");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem4);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -636,83 +600,37 @@ public class Venta extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(vendedor))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        try {
-            String loginEmpleado;
-            char[] passEmpleado;
-
-            loginEmpleado = JOptionPane.showInputDialog("Ingrese Login de Empleado: ");
-
-            empleado = this.market.BuscarEmpleado(loginEmpleado.trim());
-            JLabel label = new JLabel("Ingrese Password de Empleado: ");
-            JPasswordField passIn = new JPasswordField();
-
-            JOptionPane.showConfirmDialog(null, new Object[]{label, passIn}, "Password: ",
-                    JOptionPane.OK_CANCEL_OPTION);
-            passEmpleado = passIn.getPassword();
-
-            if (market.Logueo(loginEmpleado, passEmpleado)) {
-                logeado = true;
-                setLogeado(logeado);
-            } else {
-                JOptionPane.showMessageDialog(null, "Password Incorrecto");
-            }
-            if (logeado) {
-                vendedor.setText("Vendedor: " + empleado.getNombres() + " " + empleado.getApellidos());
-            } else {
-                vendedor.setText("Vendedor: No registrado");
-            }
-
-        } catch (ObjectNotFoundException notFound) {
-            JOptionPane.showMessageDialog(null, notFound.getMessage());
-        } catch (Exception error) {
-            JOptionPane.showMessageDialog(null, error.getMessage());
-        }
-    }//GEN-LAST:event_LoginActionPerformed
-
-    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
-        this.logeado=false;
-        this.ClientAlive=false;
-        setLogeado(logeado);
-        this.vendedor.setText("Vendedor: No Registrado");
-        inicio();
-        buy = null;
-        item = null;
-        this.detalleCompras = new ArrayList<>(); // para liberar la lista de Detalle de compras al salir de la sesion
-        CompraTabla.updateUI();
-    }//GEN-LAST:event_LogOutActionPerformed
-
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (this.logeado) {
-            try {
-                
-                if(ClienteId.getText().trim().equals("")){
-                    throw new Exception("El campo de id de Cliente no puede estar vacio");
-                }
-                long idCliente = Long.parseLong(ClienteId.getText().trim());
-
-                buy = new Compra(this.market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
-//                customer = this.market.BuscarCliente(idCliente);
-                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
-                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
-                Buscar.setEnabled(false);
-                ClienteId.setEditable(false);
-                this.ClientAlive = true;
-                
-            } catch (ObjectNotFoundException notFound) {
-                JOptionPane.showMessageDialog(null, notFound.getMessage());
-
-            } catch (Exception error) {
-                JOptionPane.showMessageDialog(null, error.getMessage());
-            }
-        }
+//        if (this.logeado) {
+//            try {
+//                
+//                if(ClienteId.getText().trim().equals("")){
+//                    throw new Exception("El campo de id de Cliente no puede estar vacio");
+//                }
+//                long idCliente = Long.parseLong(ClienteId.getText().trim());
+//
+//                buy = new Compra(this.market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+////                customer = this.market.BuscarCliente(idCliente);
+//                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
+//                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
+//                Buscar.setEnabled(false);
+//                ClienteId.setEditable(false);
+//                this.ClientAlive = true;
+//                
+//            } catch (ObjectNotFoundException notFound) {
+//                JOptionPane.showMessageDialog(null, notFound.getMessage());
+//
+//            } catch (Exception error) {
+//                JOptionPane.showMessageDialog(null, error.getMessage());
+//            }
+//        }
 
     }//GEN-LAST:event_BuscarActionPerformed
 
@@ -834,15 +752,6 @@ public class Venta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_RegistrarVentaActionPerformed
 
-    private void ShowVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowVentasActionPerformed
-//       this.VentasRealizadas.setVisible(true);
-       
-    }//GEN-LAST:event_ShowVentasActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        this.about.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         inicio();
         
@@ -851,37 +760,37 @@ public class Venta extends javax.swing.JInternalFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Venta().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Venta().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel AlmacenName;
@@ -895,15 +804,12 @@ public class Venta extends javax.swing.JInternalFrame {
     public javax.swing.JTable CompraTabla;
     public javax.swing.JTextField CompraTotal;
     public javax.swing.JButton Devolver;
-    private javax.swing.JMenuItem LogOut;
-    private javax.swing.JMenuItem Login;
     public javax.swing.JFormattedTextField ProductoCantidad;
     public javax.swing.JTextField ProductoCode;
     public javax.swing.JTextField ProductoCosto;
     public javax.swing.JTextField ProductoName;
     public javax.swing.JButton RegistrarVenta;
     public javax.swing.JButton Registro;
-    private javax.swing.JMenuItem ShowVentas;
     private javax.swing.JTable Ventas;
     private javax.swing.JFrame VentasRealizadas;
     public javax.swing.JFrame about;
@@ -922,14 +828,42 @@ public class Venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem4;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel vendedor;
     // End of variables declaration//GEN-END:variables
+    public class ListenerBuscarCliente implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (logeado) {  
+            try {
+                
+                if(ClienteId.getText().trim().equals("")){
+                    throw new Exception("El campo de id de Cliente no puede estar vacio");
+                }
+                long idCliente = Long.parseLong(ClienteId.getText().trim());
+
+                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+//                customer = this.market.BuscarCliente(idCliente);
+                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
+                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
+                Buscar.setEnabled(false);
+                ClienteId.setEditable(false);
+                ClientAlive = true;
+                
+            } catch (ObjectNotFoundException notFound) {
+                JOptionPane.showMessageDialog(null, notFound.getMessage());
+
+            } catch (Exception error) {
+                JOptionPane.showMessageDialog(null, error.getMessage());
+            }
+        }
+        }
+        
+    }
+
+
 }
