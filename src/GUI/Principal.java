@@ -8,10 +8,7 @@ package GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.table.AbstractTableModel;
 import supermecado.Almacen;
 import supermecado.Compra;
 import supermecado.DetalleCompra;
@@ -430,6 +427,7 @@ public class ListenerLogueo implements ActionListener {
 
             } catch (NullPointerException nullPointer) {
                 JOptionPane.showMessageDialog(null, "Error: Password Vacio");
+                nullPointer.printStackTrace();
 
             } catch (ObjectNotFoundException notFound) {
                 JOptionPane.showMessageDialog(null, notFound.getMessage());

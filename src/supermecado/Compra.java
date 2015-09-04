@@ -27,6 +27,10 @@ public class Compra {
         this.empleado = vendedor;
     }
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     /**
      * Metodo para agregar Detalle de compra
      *
@@ -63,8 +67,9 @@ public class Compra {
                     this.costoTotal += detalleCompras.get(pos).CostoProducto(); //se ajusta al nuevo costo por el cambio de cantidad 
                 } else if (cantidad == detalle.cantidadProductos) {
                     //aqui se remueve el objeto por completo
+                    DetalleCompra detalleCompra = detalleCompras.get(pos);
                     this.detalleCompras.remove(pos);
-                    this.costoTotal -= detalleCompras.get(pos).CostoProducto(); //Se resta el coto del producto que hay
+                    this.costoTotal -= detalleCompra.CostoProducto(); //Se resta el coto del producto que hay
                 } else {
                     throw new Exception("Cantidad a devolver invalida");
                 }

@@ -5,19 +5,12 @@
  */
 package GUI;
 
-import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.table.AbstractTableModel;
 import supermecado.Almacen;
-import supermecado.Cliente;
 import supermecado.Compra;
 import supermecado.DetalleCompra;
 import supermecado.Empleado;
@@ -39,24 +32,20 @@ public class Venta extends javax.swing.JInternalFrame {
     public boolean ClientAlive = false;
 //    private DetalleCompra detail = null;
     private Producto item = null;
-    private Compra buy = null;
 //    private int puntos = 0;
     private Empleado empleado = null;
-    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>(); //error al iniciar la GUI por nullPointerException
+//    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>(); //error al iniciar la GUI por nullPointerException
     //una solucion puede ser en la clase compra permitir crear una compra sin parametros
 //    private ArrayList<Compra> Compras = new ArrayList<>();
+    private Compra buy = null;
 
-    public Venta() {
-        initComponents();
-
-    }
 
     public void inicio(){
         clear();
         this.Buscar.setEnabled(true);
          buy = null;
         item = null;
-        this.detalleCompras = new ArrayList<>(); // para actualizar la GUI **********
+//        this.detalleCompras = new ArrayList<>(); // para actualizar la GUI **********
         CompraTabla.updateUI();
         ClienteId.setEditable(logeado);
         this.ClientAlive=false;
@@ -110,6 +99,7 @@ public class Venta extends javax.swing.JInternalFrame {
     public Venta(Almacen market) {
         this.market = market;
         this.logeado = this.market.log;
+        this.buy = new Compra(null, market.logueado);
         initComponents();
         
         AlmacenName.setText(this.market.getNombre());
@@ -149,7 +139,8 @@ public class Venta extends javax.swing.JInternalFrame {
             @Override
             public int getRowCount() {
 //                return buy.getDetalleCompras().size();
-                return detalleCompras.size();
+//                if(buy == null) return 0;
+                return buy.getDetalleCompras().size();
             }
 
             @Override
@@ -160,7 +151,7 @@ public class Venta extends javax.swing.JInternalFrame {
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
 //                DetalleCompra detalle = buy.getDetalleCompras().get(rowIndex);
-                DetalleCompra detalle = detalleCompras.get(rowIndex);
+                DetalleCompra detalle = buy.getDetalleCompras().get(rowIndex);
                 switch (columnIndex) {
                     case 0:
                         return detalle.getProducto().getNombre();
@@ -613,7 +604,7 @@ public class Venta extends javax.swing.JInternalFrame {
 //                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
                     CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
 
-                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
+//                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
                     CompraTotal.setText(buy.getCostoTotal() + "");
                     CompraTabla.updateUI();
                     
@@ -647,7 +638,7 @@ public class Venta extends javax.swing.JInternalFrame {
                 buy.remove(detail);
 //                puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
                 CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
-                detalleCompras = buy.getDetalleCompras(); // para poder actualizar la GUI **********
+//                detalleCompras = buy.getDetalleCompras(); // para poder actualizar la GUI **********
                 CompraTotal.setText(buy.getCostoTotal() + "");
                 CompraTabla.updateUI();
 //                detail = null; //liberando forzadamente //ya no se usa porque solo es local
@@ -802,7 +793,8 @@ public class Venta extends javax.swing.JInternalFrame {
                 }
                 long idCliente = Long.parseLong(ClienteId.getText().trim());
 
-                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+//                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+                
 //                customer = this.market.BuscarCliente(idCliente);
                 ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
                 ClientePuntos.setText(buy.getCliente().getPuntos() + "");
