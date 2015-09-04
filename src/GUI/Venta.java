@@ -227,10 +227,6 @@ public class Venta extends javax.swing.JInternalFrame {
         VentasRealizadas = new javax.swing.JFrame();
         jScrollPane2 = new javax.swing.JScrollPane();
         Ventas = new javax.swing.JTable();
-        about = new javax.swing.JFrame();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         AlmacenName = new javax.swing.JLabel();
         AlmacenNit = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -300,44 +296,8 @@ public class Venta extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        about.setMinimumSize(new java.awt.Dimension(300, 130));
-        about.setResizable(false);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Acerca de este Software");
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Este Software Fue diseñado por Polker");
-
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Todos los derechos reservados - 2015 ");
-
-        javax.swing.GroupLayout aboutLayout = new javax.swing.GroupLayout(about.getContentPane());
-        about.getContentPane().setLayout(aboutLayout);
-        aboutLayout.setHorizontalGroup(
-            aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aboutLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        aboutLayout.setVerticalGroup(
-            aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aboutLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addContainerGap(47, Short.MAX_VALUE))
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
         setTitle("Software - SuperMercado");
         setMinimumSize(new java.awt.Dimension(543, 557));
 
@@ -812,14 +772,10 @@ public class Venta extends javax.swing.JInternalFrame {
     public javax.swing.JButton Registro;
     private javax.swing.JTable Ventas;
     private javax.swing.JFrame VentasRealizadas;
-    public javax.swing.JFrame about;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
