@@ -5,9 +5,14 @@
  */
 package GUI;
 
+import java.awt.Desktop;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import supermecado.Almacen;
 import supermecado.Compra;
@@ -67,24 +72,25 @@ public class Principal extends javax.swing.JFrame {
         this.market = market;
         this.info = new About();
         initComponents();
-        
-        this.ShowVentas.addActionListener(new ActionListener(){
-        private VentasRealizadas vr = null;
+        //*****************************
+        //Imagen de Fondo metodos:
+        //1.  por Border
+        this.Desktop.setBorder(new Background());
+        //*****************************
+        this.ShowVentas.addActionListener(new ActionListener() {
+            private VentasRealizadas vr = null;
 
-            
             public void actionPerformed(ActionEvent e) {
-            if(this.vr==null){
-                this.vr = new VentasRealizadas(market);
-                Desktop.add(this.vr);
-                
+                if (this.vr == null) {
+                    this.vr = new VentasRealizadas(market);
+                    Desktop.add(this.vr);
+
+                }
+                this.vr.setVisible(true);
+
             }
-            this.vr.setVisible(true);
-                
-                
-            }
-        
-        
-    });
+
+        });
 
         ListenerLogueo log = new ListenerLogueo();
         this.Password.addActionListener(log);
@@ -383,7 +389,6 @@ public class Principal extends javax.swing.JFrame {
 ////        });
 //    }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Desktop;
     private javax.swing.JMenuItem LogOut;
@@ -418,7 +423,6 @@ public class ListenerLogueo implements ActionListener {
                     clear();
                     PanelLogin.setVisible(false);
                     setLogeado(market.log);
-                    
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Password Incorrecto");
