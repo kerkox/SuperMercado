@@ -89,6 +89,12 @@ public class Almacen {
     //Fin metodos de agregado
     //*******************************    
     
+    
+    public ArrayList<Empleado> getEmpleados(){
+        return empleados;
+    }
+            
+    
     //******************************
     // Metodos de Busqueda
 

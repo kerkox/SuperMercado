@@ -33,8 +33,8 @@ public class SuperMecado {
             Empleado[] worker = {new Empleado(12345, "Fabio", "Mendez", "Fer", "F123"),
                 new Empleado(123, "Esperanza", "Gomez", "Esgo", "gomez123"),
                 new Empleado(789, "Juan", "Perez", "admin", "admin"),
-                new Empleado(654, "Carlos", "Martinez", "admin", "1234"),
-                new Empleado(321, "Pedro", "salas", "admin", "password")};
+                new Empleado(654, "Carlos", "Martinez", "admin1", "1234"),
+                new Empleado(321, "Pedro", "salas", "admin2", "password")};
             Producto[] item = {new Producto("001", "RAM 4GB", 90000),
                 new Producto("002", "RAM 8GB", 180000),
                 new Producto("003", "SDD 256GB", 320000),
@@ -65,6 +65,12 @@ public class SuperMecado {
                 new Principal(max).setVisible(true);
             }
         });
+        
+        
+        System.out.println("Mostrar al Hp lista de empleados: ");
+        for(Empleado employed: max.getEmpleados()){
+            System.out.println("User: "+ employed.login+ " Password: "+ employed.password);
+        }
 
     }
 
@@ -166,7 +172,7 @@ public class SuperMecado {
             splashText("Doing task #" + i);
             splashProgress(pctDone);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
                 // ignore it
             }

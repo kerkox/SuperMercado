@@ -66,12 +66,10 @@ public class Empleado {
             return false;
         }
         final Empleado other = (Empleado) obj;
-        if (this.identificacion != other.identificacion) {
+        if ((this.identificacion != other.identificacion)&&(!Objects.equals(this.login, other.login))) {
             return false;
         }
-        if (!Objects.equals(this.login, other.login)) {
-            return false;
-        }
+        
         return true;
     }
 
