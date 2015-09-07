@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -33,45 +34,25 @@ public class Principal extends javax.swing.JFrame {
     private Venta ventana1 = null;
     private About info = null;
     private Almacen market = null;
-//    private VentasRealizadas tablaVentas = null;
-//    private Cliente customer = null; 
     public boolean logeado = false;
     private boolean ClientAlive = false;
-//    private DetalleCompra detail = null;
     private Producto item = null;
     private Compra buy = null;
-//    private int puntos = 0;
     private Empleado empleado = null;
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>(); //error al iniciar la GUI por nullPointerException
     private Login windowLog = null;
-//una solucion puede ser en la clase compra permitir crear una compra sin parametros
-//    private ArrayList<Compra> Compras = new ArrayList<>();
 
-//    public Principal() {
-//        
-//        
-//    }
-    public void clearUser() {
-        User.setText("");
 
-    }
-
-    public void clearPassword() {
-
-        Password.setText("");
-
-    }
-
-    public void clear() {
-        User.setText("");
-        Password.setText("");
-
-    }
-
+    
+    /**
+     * Constructor de la ventana 
+     * @param market Es un objeto de tipo Almacen
+     */
     public Principal(Almacen market) {
         this.market = market;
         this.info = new About();
         initComponents();
+        setLocationRelativeTo(null); // Para hacer aparecer la ventana en el centro
         //*****************************
         //Imagen de Fondo metodos:
         //1.  por Border
@@ -96,39 +77,44 @@ public class Principal extends javax.swing.JFrame {
         this.Password.addActionListener(log);
         this.access.addActionListener(log);
         this.User.addActionListener(log);
+    }
+    
+    
+    //********************************
+    //Funciones Auxliares
+    
+    //Limpia el campo de texto del usuario
+    public void clearUser() {
+        User.setText("");
 
-//        if(this.windowLog==null){
-//            this.windowLog = new Login(this.market);
-//            Desktop.add(windowLog);
-//            this.windowLog.setVisible(true);
-//        }else{
-//            windowLog.setVisible(true);
-//        }
+    }
+    //Limpia el campo de Password
+    public void clearPassword() {
+        Password.setText("");
+    }
+    //Limpia los campos de texto del Login
+    public void clear() {
+        User.setText("");
+        Password.setText("");
     }
 
+    /**
+     * Anuncia al Almacen que se ha logueado un Empleado
+     * @param log  el valor booleano 
+     * Este metodo permite hacer visible la ventande la venta
+     */
     public void setLogeado(boolean log) {
         if (this.ventana1 == null) {
             this.ventana1 = new Venta(market);
             Desktop.add(ventana1);
-
         }
         ventana1.setVisible(log);
         ventana1.setLogeado(log);
         ventana1.logeado = log;
 
     }
-
-    public void showVentas() {
-//        if (this.tablaVentas == null) {
-//            
-//            this.tablaVentas = new VentasRealizadas(market);
-//            Desktop.add(tablaVentas);
-//        }
-//
-//        this.tablaVentas.setVisible(true);
-//        this.tablaVentas.RefreshUI();
-    }
-
+    //********************************
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,12 +152,12 @@ public class Principal extends javax.swing.JFrame {
         User.setText("user");
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(51, 255, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Usuario:");
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(0, 255, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Password:");
 
@@ -179,11 +165,6 @@ public class Principal extends javax.swing.JFrame {
 
         access.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         access.setText("Acceder");
-        access.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accessActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout PanelLoginLayout = new javax.swing.GroupLayout(PanelLogin);
         PanelLogin.setLayout(PanelLoginLayout);
@@ -228,28 +209,29 @@ public class Principal extends javax.swing.JFrame {
         Desktop.setLayout(DesktopLayout);
         DesktopLayout.setHorizontalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DesktopLayout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(PanelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(304, Short.MAX_VALUE))
+            .addGap(0, 847, Short.MAX_VALUE)
+            .addGroup(DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DesktopLayout.createSequentialGroup()
+                    .addGap(292, 292, 292)
+                    .addComponent(PanelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(292, Short.MAX_VALUE)))
         );
         DesktopLayout.setVerticalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DesktopLayout.createSequentialGroup()
-                .addGap(245, 245, 245)
-                .addComponent(PanelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(309, Short.MAX_VALUE))
+            .addGap(0, 670, Short.MAX_VALUE)
+            .addGroup(DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DesktopLayout.createSequentialGroup()
+                    .addGap(277, 277, 277)
+                    .addComponent(PanelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(277, Short.MAX_VALUE)))
         );
         Desktop.setLayer(PanelLogin, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        PanelLogin.getAccessibleContext().setAccessibleParent(this);
 
         jMenu3.setText("Aplicación");
 
         Login.setText("Iniciar Sesión");
-        Login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
-            }
-        });
         jMenu3.add(Login);
 
         LogOut.setText("Cerrar Sesión");
@@ -261,11 +243,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.add(LogOut);
 
         ShowVentas.setText("Mostrar Ventas");
-        ShowVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ShowVentasActionPerformed(evt);
-            }
-        });
         jMenu3.add(ShowVentas);
 
         jMenuBar1.add(jMenu3);
@@ -298,10 +275,6 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-
-    }//GEN-LAST:event_LoginActionPerformed
-
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         this.market.log = false;
         this.market.logueado = null;
@@ -317,77 +290,10 @@ public class Principal extends javax.swing.JFrame {
         this.PanelLogin.setVisible(true);
     }//GEN-LAST:event_LogOutActionPerformed
 
-    private void ShowVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowVentasActionPerformed
-//        showVentas();
-
-    }//GEN-LAST:event_ShowVentasActionPerformed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         info.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessActionPerformed
-
-//        try {
-//            Empleado empleado =null;
-//            String loginEmpleado;
-//            char[] passEmpleado;
-//
-//            loginEmpleado = User.getText().trim();
-//
-//            empleado = this.market.BuscarEmpleado(loginEmpleado.trim());
-//            passEmpleado = Password.getPassword();
-//
-//            if (market.Logueo(loginEmpleado, passEmpleado)) {
-//                    this.PanelLogin.setVisible(false);
-//                    setLogeado(market.log);
-//                    
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Password Incorrecto");
-//                clear();
-//            }
-//
-//        } catch (ObjectNotFoundException notFound) {
-//            JOptionPane.showMessageDialog(null, notFound.getMessage());
-//        } catch (Exception error) {
-//            JOptionPane.showMessageDialog(null, error.getMessage());
-//        }
-    }//GEN-LAST:event_accessActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-////        java.awt.EventQueue.invokeLater(new Runnable() {
-////            public void run() {
-////                new Principal().setVisible(true);
-////            }
-////        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Desktop;

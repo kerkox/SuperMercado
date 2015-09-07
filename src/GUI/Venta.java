@@ -27,81 +27,18 @@ public class Venta extends javax.swing.JInternalFrame {
      * Creates new form Venta
      */
     private Almacen market = null;
-//    private Cliente customer = null; 
     public boolean logeado = false;
     public boolean ClientAlive = false;
-//    private DetalleCompra detail = null;
     private Producto item = null;
-//    private int puntos = 0;
     private Empleado empleado = null;
-//    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>(); //error al iniciar la GUI por nullPointerException
-    //una solucion puede ser en la clase compra permitir crear una compra sin parametros
-//    private ArrayList<Compra> Compras = new ArrayList<>();
     private Compra buy = null;
 
-
-    public void inicio(){
-        clear();
-        this.Buscar.setEnabled(true);
-         buy = null;
-        item = null;
-//        this.detalleCompras = new ArrayList<>(); // para actualizar la GUI **********
-        CompraTabla.updateUI();
-        ClienteId.setEditable(logeado);
-        this.ClientAlive=false;
-        
-    }
-    public void clear() {
-        ClienteId.setText("");
-        ClienteName.setText("");
-        ClientePuntos.setText("");
-        ProductoCantidad.setText("");
-        ProductoCode.setText("");
-        ProductoCosto.setText("");
-        ProductoName.setText("");
-        CompraPuntos.setText("");
-        CompraTotal.setText("");
-    }
-
-    public void clearProducto() {
-        ProductoCantidad.setText("");
-        ProductoCode.setText("");
-        ProductoCosto.setText("");
-        ProductoName.setText("");
-    }
-
-    /**
-     * 
-     * @param login  recibe un valor boolenao
-     * Pero hay que mejorarlo para que tome el valor del booleano de la clase
-     */
-    public void setLogeado(boolean login) {
-
-        ClienteId.setEditable(login);
-//        ClienteName.setEditable(login);
-//        ClientePuntos.setEditable(login);
-        ProductoCantidad.setEditable(login);
-        ProductoCode.setEditable(login);
-//        ProductoCosto.setEditable(login);
-//        ProductoName.setEditable(login);
-//        CompraPuntos.setEditable(login);
-//        CompraTotal.setEditable(login);
-        
-        Buscar.setEnabled(login);
-        if(this.market.logueado==null){
-            vendedor.setText("Vendedor:  No Registrado");
-        }else{
-            empleado = this.market.logueado;
-        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
-        }
-    }
 
     public Venta(Almacen market) {
         this.market = market;
         this.logeado = this.market.log;
         this.buy = new Compra(null, market.logueado);
         initComponents();
-        
         AlmacenName.setText(this.market.getNombre());
         AlmacenNit.setText(this.market.getNIT());
 
@@ -139,7 +76,7 @@ public class Venta extends javax.swing.JInternalFrame {
             @Override
             public int getRowCount() {
 //                return buy.getDetalleCompras().size();
-//                if(buy == null) return 0;
+                if(buy == null) return 0; //Necesario para cuando no se han realizado ventas y se cierra la sesion
                 return buy.getDetalleCompras().size();
             }
 
@@ -203,6 +140,63 @@ public class Venta extends javax.swing.JInternalFrame {
 //        });
 
     }
+    
+    public void inicio(){
+        clear();
+        this.Buscar.setEnabled(true);
+        buy = null;
+        item = null;
+        CompraTabla.updateUI();
+        ClienteId.setEditable(logeado);
+        this.ClientAlive=false;
+        
+    }
+    public void clear() {
+        ClienteId.setText("");
+        ClienteName.setText("");
+        ClientePuntos.setText("");
+        ProductoCantidad.setText("");
+        ProductoCode.setText("");
+        ProductoCosto.setText("");
+        ProductoName.setText("");
+        CompraPuntos.setText("");
+        CompraTotal.setText("");
+    }
+
+    public void clearProducto() {
+        ProductoCantidad.setText("");
+        ProductoCode.setText("");
+        ProductoCosto.setText("");
+        ProductoName.setText("");
+    }
+
+    /**
+     * 
+     * @param login  recibe un valor boolenao
+     * Pero hay que mejorarlo para que tome el valor del booleano de la clase
+     */
+    public void setLogeado(boolean login) {
+
+        ClienteId.setEditable(login);
+//        ClienteName.setEditable(login);
+//        ClientePuntos.setEditable(login);
+        ProductoCantidad.setEditable(login);
+        ProductoCode.setEditable(login);
+//        ProductoCosto.setEditable(login);
+//        ProductoName.setEditable(login);
+//        CompraPuntos.setEditable(login);
+//        CompraTotal.setEditable(login);
+        
+        Buscar.setEnabled(login);
+        if(this.market.logueado==null){
+            vendedor.setText("Vendedor:  No Registrado");
+        }else{
+            empleado = this.market.logueado;
+        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
+        }
+    }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
