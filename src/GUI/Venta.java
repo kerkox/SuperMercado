@@ -787,7 +787,7 @@ public class Venta extends javax.swing.JInternalFrame {
                 }
                 long idCliente = Long.parseLong(ClienteId.getText().trim());
 
-//                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
                 
 //                customer = this.market.BuscarCliente(idCliente);
                 ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
