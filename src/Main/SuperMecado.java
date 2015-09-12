@@ -1,9 +1,14 @@
-package supermecado;
+package Main;
 
 import GUI.Principal;
 import java.awt.SplashScreen;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import supermecado.Almacen;
+import supermecado.Cliente;
+import supermecado.Empleado;
+import supermecado.ObjectNotFoundException;
+import supermecado.Producto;
 
 /**
  *
@@ -66,12 +71,6 @@ public class SuperMecado {
             }
         });
         
-        
-        System.out.println("Mostrar al Hp lista de empleados: ");
-        for(Empleado employed: max.getEmpleados()){
-            System.out.println("User: "+ employed.login+ " Password: "+ employed.password);
-        }
-
     }
 
     /**
