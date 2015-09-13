@@ -1,5 +1,6 @@
 package Main;
 
+import ConexionBD.Conexion;
 import GUI.Principal;
 import java.awt.SplashScreen;
 import java.awt.*;
@@ -70,6 +71,17 @@ public class SuperMecado {
                 new Principal(max).setVisible(true);
             }
         });
+        
+        System.out.println("Ahora probando el motor de Derby");
+        System.out.println("Creando la conexion al servidor DERBY");
+        try{
+        Conexion con = new Conexion();
+            System.out.println("Funciono Correctamente");
+        }catch(Exception error){
+            System.out.println("######Hubo algun problema");
+            error.printStackTrace();
+        }
+        
         
     }
 
