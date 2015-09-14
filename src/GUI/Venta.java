@@ -155,7 +155,8 @@ public class Venta extends javax.swing.JInternalFrame {
         ClienteId.setText("");
         ClienteName.setText("");
         ClientePuntos.setText("");
-        ProductoCantidad.setText("");
+//        ProductoCantidad.setText("");
+        ProductoCantidad.setValue(0);
         ProductoCode.setText("");
         ProductoCosto.setText("");
         ProductoName.setText("");
@@ -164,7 +165,8 @@ public class Venta extends javax.swing.JInternalFrame {
     }
 
     public void clearProducto() {
-        ProductoCantidad.setText("");
+//        ProductoCantidad.setText("");
+        ProductoCantidad.setValue(0);
         ProductoCode.setText("");
         ProductoCosto.setText("");
         ProductoName.setText("");
@@ -180,7 +182,9 @@ public class Venta extends javax.swing.JInternalFrame {
         ClienteId.setEditable(login);
 //        ClienteName.setEditable(login);
 //        ClientePuntos.setEditable(login);
-        ProductoCantidad.setEditable(login);
+        ProductoCantidad.setEnabled(login);
+        
+//        ProductoCantidad.setEditable(login);
         ProductoCode.setEditable(login);
 //        ProductoCosto.setEditable(login);
 //        ProductoName.setEditable(login);
@@ -241,7 +245,7 @@ public class Venta extends javax.swing.JInternalFrame {
         CompraTotal = new javax.swing.JTextField();
         RegistrarVenta = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
-        ProductoCantidad = new javax.swing.JFormattedTextField();
+        ProductoCantidad = new javax.swing.JSpinner();
         vendedor = new javax.swing.JLabel();
 
         jLabel10.setText("jLabel10");
@@ -425,9 +429,6 @@ public class Venta extends javax.swing.JInternalFrame {
             }
         });
 
-        ProductoCantidad.setEditable(false);
-        ProductoCantidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -455,11 +456,10 @@ public class Venta extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6)
                             .addComponent(ProductoCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE))
-                            .addComponent(ProductoCantidad)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ProductoCantidad))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -545,7 +545,7 @@ public class Venta extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(vendedor))
         );
 
@@ -581,14 +581,16 @@ public class Venta extends javax.swing.JInternalFrame {
 
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
         if (this.logeado&&this.ClientAlive) {
-            String quantity = ProductoCantidad.getText().trim();
+//            String quantity = ProductoCantidad.getText().trim();
+            int quantity = (int) ProductoCantidad.getValue();
             if (item == null) {
                 JOptionPane.showMessageDialog(null, "No has introducido un Producto");
-            } else if (quantity.equals("")) {
+            } else if (quantity==0) {
                 JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
             } else {
                 //Aqui se creara el Detalle de Compra
-                int cantidad = Integer.parseInt(quantity);
+//                int cantidad = Integer.parseInt(quantity);
+                int cantidad = quantity;
                 if (cantidad <= 0) {
                     JOptionPane.showMessageDialog(null, "Cantidad de Productos Invalida");
                 } else {
@@ -617,7 +619,8 @@ public class Venta extends javax.swing.JInternalFrame {
     private void DevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DevolverActionPerformed
         if (this.logeado&&this.ClientAlive) {
             DetalleCompra detail = null;
-            String quantity = ProductoCantidad.getText().trim();
+//            String quantity = ProductoCantidad.getText().trim();
+            int quantity = (int) ProductoCantidad.getValue();
 
         //*******************************
             //Selecionando el producto de la tabla
@@ -749,7 +752,7 @@ public class Venta extends javax.swing.JInternalFrame {
     public javax.swing.JTable CompraTabla;
     public javax.swing.JTextField CompraTotal;
     public javax.swing.JButton Devolver;
-    public javax.swing.JFormattedTextField ProductoCantidad;
+    private javax.swing.JSpinner ProductoCantidad;
     public javax.swing.JTextField ProductoCode;
     public javax.swing.JTextField ProductoCosto;
     public javax.swing.JTextField ProductoName;
