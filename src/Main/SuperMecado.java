@@ -1,6 +1,6 @@
 package Main;
 
-import ConexionBD.Conexion;
+import database.Conexion;
 import GUI.Principal;
 import java.awt.SplashScreen;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class SuperMecado {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         splashInit();           // initialize splash overlay drawing parameters
         appInit();              // simulate what an application would do 
 
@@ -71,18 +71,18 @@ public class SuperMecado {
                 new Principal(max).setVisible(true);
             }
         });
-        
+
         System.out.println("Ahora probando el motor de Derby");
         System.out.println("Creando la conexion al servidor DERBY");
-        try{
-        Conexion con = new Conexion();
+        try {
+//        Conexion con = new Conexion();
+            Conexion.getInstance().getConnection();
             System.out.println("Funciono Correctamente");
-        }catch(Exception error){
+        } catch (Exception error) {
             System.out.println("######Hubo algun problema");
             error.printStackTrace();
         }
-        
-        
+
     }
 
     /**
