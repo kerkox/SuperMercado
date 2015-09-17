@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package supermecado;
+package supermecado.clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -13,8 +14,9 @@ import java.util.Objects;
  *
  * @author zeus
  */
-public class Compra {
-
+public class Compra implements Serializable{
+    private static final long serialVersionUID = 12345;
+    
     private int costoTotal = 0;
     private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
     private Cliente cliente;

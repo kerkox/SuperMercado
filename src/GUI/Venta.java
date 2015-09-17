@@ -10,12 +10,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
-import supermecado.Almacen;
-import supermecado.Compra;
-import supermecado.DetalleCompra;
-import supermecado.Empleado;
-import supermecado.ObjectNotFoundException;
-import supermecado.Producto;
+import supermecado.clases.Almacen;
+import supermecado.clases.Compra;
+import supermecado.clases.DetalleCompra;
+import supermecado.clases.Empleado;
+import supermecado.clases.ObjectNotFoundException;
+import supermecado.clases.Producto;
 
 /**
  *

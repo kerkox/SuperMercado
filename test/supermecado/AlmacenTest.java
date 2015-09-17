@@ -5,6 +5,11 @@
  */
 package supermecado;
 
+import supermecado.clases.Cliente;
+import supermecado.clases.Compra;
+import supermecado.clases.Empleado;
+import supermecado.clases.Producto;
+import supermecado.clases.Almacen;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;

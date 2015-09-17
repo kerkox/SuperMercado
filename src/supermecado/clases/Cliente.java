@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package supermecado;
+package supermecado.clases;
+
+import java.io.Serializable;
 
 /**
  *
  * @author zeus
  */
-public class Cliente {
-    
+public class Cliente implements Serializable{
+    private static final long serialVersionUID = 12345;
     
     private long identificacion;
     private String nombres;

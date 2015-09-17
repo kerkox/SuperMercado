@@ -5,6 +5,7 @@
  */
 package supermecado;
 
+import supermecado.clases.DetalleCompra;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

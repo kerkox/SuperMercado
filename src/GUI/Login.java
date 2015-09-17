@@ -8,9 +8,9 @@ package GUI;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import supermecado.Almacen;
-import supermecado.Empleado;
-import supermecado.ObjectNotFoundException;
+import supermecado.clases.Almacen;
+import supermecado.clases.Empleado;
+import supermecado.clases.ObjectNotFoundException;
 
 /**
  *

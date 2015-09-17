@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package supermecado;
+package supermecado.clases;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author zeus
  */
-public class Empleado {
+public class Empleado implements Serializable{
+    private static final long serialVersionUID = 12345;
     
     long identificacion;
     String nombres;

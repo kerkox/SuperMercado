@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package supermecado;
+package supermecado.clases;
 
 /**
  *
  * @author Polker
  */
 public class ObjectNotFoundException extends Exception {
-
+    private static final long serialVersionUID = 12345;
     /**
      * Creates a new instance of <code>ObjectNotFoundException</code> without
      * detail message.

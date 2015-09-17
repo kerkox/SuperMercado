@@ -11,16 +11,24 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import supermecado.Almacen;
-import supermecado.Compra;
-import supermecado.DetalleCompra;
-import supermecado.Empleado;
-import supermecado.ObjectNotFoundException;
-import supermecado.Producto;
+import supermecado.clases.Almacen;
+import supermecado.clases.Compra;
+import supermecado.clases.DetalleCompra;
+import supermecado.clases.Empleado;
+import supermecado.clases.ObjectNotFoundException;
+import supermecado.clases.Producto;
 
 /**
  *
@@ -77,6 +85,61 @@ public class Principal extends javax.swing.JFrame {
         this.Password.addActionListener(log);
         this.access.addActionListener(log);
         this.User.addActionListener(log);
+        
+        /**
+         * 
+         */
+        super.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                //System.out.println("windowClosing");
+                ObjectOutputStream oos = null;
+                try {
+                    oos = new ObjectOutputStream(new FileOutputStream("market.data"));
+                    oos.writeObject(Principal.this.market);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    if (oos != null) {
+                        try {
+                            oos.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                //System.out.println("windowClosed");
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+        
     }
     
     

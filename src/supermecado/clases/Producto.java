@@ -1,13 +1,15 @@
 
-package supermecado;
+package supermecado.clases;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author zeus
  */
-public class Producto {
+public class Producto implements Serializable {
+    private static final long serialVersionUID = 12345;
     
     String codigo;
     String nombre;

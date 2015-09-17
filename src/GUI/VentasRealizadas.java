@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.AbstractTableModel;
-import supermecado.Almacen;
-import supermecado.Compra;
+import supermecado.clases.Almacen;
+import supermecado.clases.Compra;
 
 /**
  *
