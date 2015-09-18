@@ -7,8 +7,12 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import supermecado.clases.Almacen;
 import supermecado.clases.Compra;
@@ -33,7 +37,6 @@ public class Venta extends javax.swing.JInternalFrame {
     private Empleado empleado = null;
     private Compra buy = null;
 
-
     public Venta(Almacen market) {
         this.market = market;
         this.logeado = this.market.log;
@@ -47,7 +50,12 @@ public class Venta extends javax.swing.JInternalFrame {
         this.ClienteId.addActionListener(lbc);
         this.Buscar.addActionListener(lbc);
         //*****************************************
-        
+
+        //Evento para el registro de un DetalleCompra
+        registrarDetalle rd = new registrarDetalle();
+        Registro.addActionListener(rd);
+        ProductoCantidad.addActionListener(rd);
+
         //Agregado de Captura de evento al presionar enter para buscar
         this.ProductoCode.addActionListener((ActionEvent e) -> {
             try {
@@ -64,6 +72,35 @@ public class Venta extends javax.swing.JInternalFrame {
             }
         });
 
+        //===================================
+        //Manejo de la TABLa
+//        CompraTabla.setFocusable(true);
+        this.CompraTabla.addFocusListener(new FocusListener() {
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                Devolver.setEnabled(true);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                    //##########Pendiente Modificar
+//                if(!Devolver.isSelected()){
+//                    
+//                
+//                    JTable tabla = (JTable) e.getSource();
+//                    tabla.clearSelection();
+//                    Devolver.setEnabled(false);
+//                }
+                 
+
+                
+                    
+                
+
+            }
+        });
+
         this.CompraTabla.setModel(new AbstractTableModel() {
 
             private String[] nombres = {"Producto", "Costo Unitario", "Cantidad", "Costo"};
@@ -76,7 +113,9 @@ public class Venta extends javax.swing.JInternalFrame {
             @Override
             public int getRowCount() {
 //                return buy.getDetalleCompras().size();
-                if(buy == null) return 0; //Necesario para cuando no se han realizado ventas y se cierra la sesion
+                if (buy == null) {
+                    return 0; //Necesario para cuando no se han realizado ventas y se cierra la sesion
+                }
                 return buy.getDetalleCompras().size();
             }
 
@@ -102,55 +141,21 @@ public class Venta extends javax.swing.JInternalFrame {
                 return "";
             }
         });
-//        this.Ventas.setModel(new AbstractTableModel(){
-//            private String[] nombres ={"Vendedor","Cliente","Costo","Puntos Otorgados"};
-//
-//            @Override
-//            public String getColumnName(int column){
-//                return this.nombres[column];
-//            }
-//            
-//            
-//            @Override
-//            public int getRowCount() {
-//                return market.getCompras().size();
-//            }
-//
-//            @Override
-//            public int getColumnCount() {
-//                return this.nombres.length;
-//            }
-//
-//            @Override
-//            public Object getValueAt(int rowIndex, int columnIndex) {
-//                Compra purchase = market.getCompras().get(rowIndex);
-//                switch(columnIndex){
-//                    case 0:
-//                        return purchase.getEmpleado().getNombres()+" "+purchase.getEmpleado().getApellidos();
-//                    case 1:
-//                        return purchase.getCliente().getNombres()+" "+purchase.getCliente().getApellidos();
-//                    case 2:
-//                        return purchase.getCostoTotal();
-//                    case 3:
-//                        return purchase.puntosCompra();
-//                }
-//                return "";
-//            }
-//            
-//        });
 
+        //===================================
     }
-    
-    public void inicio(){
+
+    public void inicio() {
         clear();
         this.Buscar.setEnabled(true);
         buy = null;
         item = null;
         CompraTabla.updateUI();
         ClienteId.setEditable(logeado);
-        this.ClientAlive=false;
-        
+        this.ClientAlive = false;
+
     }
+
     public void clear() {
         ClienteId.setText("");
         ClienteName.setText("");
@@ -171,9 +176,9 @@ public class Venta extends javax.swing.JInternalFrame {
     }
 
     /**
-     * 
-     * @param login  recibe un valor boolenao
-     * Pero hay que mejorarlo para que tome el valor del booleano de la clase
+     *
+     * @param login recibe un valor boolenao Pero hay que mejorarlo para que
+     * tome el valor del booleano de la clase
      */
     public void setLogeado(boolean login) {
 
@@ -186,17 +191,15 @@ public class Venta extends javax.swing.JInternalFrame {
 //        ProductoName.setEditable(login);
 //        CompraPuntos.setEditable(login);
 //        CompraTotal.setEditable(login);
-        
+
         Buscar.setEnabled(login);
-        if(this.market.logueado==null){
+        if (this.market.logueado == null) {
             vendedor.setText("Vendedor:  No Registrado");
-        }else{
+        } else {
             empleado = this.market.logueado;
-        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
+            vendedor.setText("Vendedor: " + this.market.logueado.getNombres() + " " + this.market.logueado.getApellidos());
         }
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -383,6 +386,7 @@ public class Venta extends javax.swing.JInternalFrame {
         });
 
         Devolver.setText("Devolver");
+        Devolver.setEnabled(false);
         Devolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DevolverActionPerformed(evt);
@@ -580,46 +584,46 @@ public class Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
-        if (this.logeado&&this.ClientAlive) {
-            String quantity = ProductoCantidad.getText().trim();
-            if (item == null) {
-                JOptionPane.showMessageDialog(null, "No has introducido un Producto");
-            } else if (quantity.equals("")) {
-                JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
-            } else {
-                //Aqui se creara el Detalle de Compra
-                int cantidad = Integer.parseInt(quantity);
-                if (cantidad <= 0) {
-                    JOptionPane.showMessageDialog(null, "Cantidad de Productos Invalida");
-                } else {
-//                    detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
-
-                    buy.add(new DetalleCompra(cantidad, item)); //agregado a la lista el Detalle de compra
-//                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
-                    CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
-
-//                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
-                    CompraTotal.setText(buy.getCostoTotal() + "");
-                    CompraTabla.updateUI();
-                    
-
-//                    detail = null; //liberando forzadamente 
-                    item = null;
-                    clearProducto();
-
-                }
-
-            }
-        }
+//        if (this.logeado&&this.ClientAlive) {
+//            String quantity = ProductoCantidad.getText().trim();
+//            if (item == null) {
+//                JOptionPane.showMessageDialog(null, "No has introducido un Producto");
+//            } else if (quantity.equals("")) {
+//                JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
+//            } else {
+//                //Aqui se creara el Detalle de Compra
+//                int cantidad = Integer.parseInt(quantity);
+//                if (cantidad <= 0) {
+//                    JOptionPane.showMessageDialog(null, "Cantidad de Productos Invalida");
+//                } else {
+////                    detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
+//                    
+//                    buy.add(new DetalleCompra(cantidad, item)); //agregado a la lista el Detalle de compra
+////                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
+//                    CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
+//
+////                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
+//                    CompraTotal.setText(buy.getCostoTotal() + "");
+//                    CompraTabla.updateUI();
+//                    
+//
+////                    detail = null; //liberando forzadamente 
+//                    item = null;
+//                    clearProducto();
+//
+//                }
+//
+//            }
+//        }
 
     }//GEN-LAST:event_RegistroActionPerformed
 
     private void DevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DevolverActionPerformed
-        if (this.logeado&&this.ClientAlive) {
+        if (this.logeado && this.ClientAlive) {
             DetalleCompra detail = null;
             String quantity = ProductoCantidad.getText().trim();
 
-        //*******************************
+            //*******************************
             //Selecionando el producto de la tabla
             if (buy.getDetalleCompras().size() == 1) {
                 detail = buy.getDetalleCompras().get(0);
@@ -684,22 +688,22 @@ public class Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_DevolverActionPerformed
 
     private void RegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVentaActionPerformed
-        if(this.logeado&&this.ClientAlive){
-        try {
-            buy.getCliente().incrementarPuntos(buy.puntosCompra());
-            this.market.add(buy);
+        if (this.logeado && this.ClientAlive) {
+            try {
+                buy.getCliente().incrementarPuntos(buy.puntosCompra());
+                this.market.add(buy);
 //            this.Compras = this.market.getCompras(); 
 //            this.Ventas.updateUI();
-            inicio();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+                inicio();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }//GEN-LAST:event_RegistrarVentaActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         inicio();
-        
+
     }//GEN-LAST:event_CancelarActionPerformed
 
     /**
@@ -775,37 +779,75 @@ public class Venta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel vendedor;
     // End of variables declaration//GEN-END:variables
-    public class ListenerBuscarCliente implements ActionListener{
+    public class ListenerBuscarCliente implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (logeado) {  
-            try {
-                
-                if(ClienteId.getText().trim().equals("")){
-                    throw new Exception("El campo de id de Cliente no puede estar vacio");
-                }
-                long idCliente = Long.parseLong(ClienteId.getText().trim());
 
-                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
-                
+            if (logeado) {
+                try {
+
+                    if (ClienteId.getText().trim().equals("")) {
+                        throw new Exception("El campo de id de Cliente no puede estar vacio");
+                    }
+                    long idCliente = Long.parseLong(ClienteId.getText().trim());
+
+                    buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+
 //                customer = this.market.BuscarCliente(idCliente);
-                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
-                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
-                Buscar.setEnabled(false);
-                ClienteId.setEditable(false);
-                ClientAlive = true;
-                
-            } catch (ObjectNotFoundException notFound) {
-                JOptionPane.showMessageDialog(null, notFound.getMessage());
+                    ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
+                    ClientePuntos.setText(buy.getCliente().getPuntos() + "");
+                    Buscar.setEnabled(false);
+                    ClienteId.setEditable(false);
+                    ClientAlive = true;
 
-            } catch (Exception error) {
-                JOptionPane.showMessageDialog(null, error.getMessage());
+                } catch (ObjectNotFoundException notFound) {
+                    JOptionPane.showMessageDialog(null, notFound.getMessage());
+
+                } catch (Exception error) {
+                    JOptionPane.showMessageDialog(null, error.getMessage());
+                }
             }
         }
-        }
-        
+
     }
 
+    public class registrarDetalle implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (logeado && ClientAlive) {
+                String quantity = ProductoCantidad.getText().trim();
+                if (item == null) {
+                    JOptionPane.showMessageDialog(null, "No has introducido un Producto");
+                } else if (quantity.equals("")) {
+                    JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
+                } else {
+                    //Aqui se creara el Detalle de Compra
+                    int cantidad = Integer.parseInt(quantity);
+                    if (cantidad <= 0) {
+                        JOptionPane.showMessageDialog(null, "Cantidad de Productos Invalida");
+                    } else {
+//                    detail = new DetalleCompra(cantidad, item); // Creacion de Detalle de compra con producto
+
+                        buy.add(new DetalleCompra(cantidad, item)); //agregado a la lista el Detalle de compra
+//                    puntos = buy.puntosCompra(); //Calculo de puntos en la compra actual
+                        CompraPuntos.setText(buy.puntosCompra() + ""); //Mostrando puntos compra actual
+
+//                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
+                        CompraTotal.setText(buy.getCostoTotal() + "");
+                        CompraTabla.updateUI();
+
+//                    detail = null; //liberando forzadamente 
+                        item = null;
+                        clearProducto();
+
+                    }
+
+                }
+            }
+        }
+
+    }
 
 }
