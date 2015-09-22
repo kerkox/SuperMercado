@@ -47,12 +47,8 @@ public class Main {
                 try {
                     ois = new ObjectInputStream(new FileInputStream("market.data"));
                     market = (Almacen) ois.readObject();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }  catch (Exception  ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     if (ois != null) {
                         try {
