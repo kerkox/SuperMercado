@@ -7,6 +7,7 @@ package supermecado;
 
 import java.util.ArrayList;
 import java.util.Date;
+import persistence.ClienteJpaController;
 
 /**
  *
@@ -23,6 +24,8 @@ public class Almacen {
     public Empleado logueado;
     public boolean log = false;
 
+//    private ClienteJpaController clienteJpaController = new ClienteJpaController();
+    
     public Almacen(String nombre, String NIT) {
         this.nombre = nombre;
         this.NIT = NIT;
@@ -105,16 +108,7 @@ public class Almacen {
      * @throws ObjectNotFoundException 
      */
     public Empleado BuscarEmpleado(long id) throws ObjectNotFoundException{
-        Empleado employee=null;
-        for(Empleado worker : empleados ){
-            if(worker.getIdentificacion()==id){
-                employee=worker;
-            }
-        }
-        if(employee==null){
-            throw new ObjectNotFoundException("Empleado con id: " + id + " no encontrado");
-        }
-        
+       
         return employee;
         
     }

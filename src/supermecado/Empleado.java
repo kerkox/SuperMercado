@@ -5,19 +5,32 @@
  */
 package supermecado;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author zeus
  */
-public class Empleado {
+@Entity
+public class Empleado implements Serializable {
     
+    @Id
     long identificacion;
+    @Column(nullable =  false, length = 100)
     String nombres;
+    @Column(nullable =  false, length = 100)
     String apellidos;
+    @Column(nullable =  false, length = 20)
     String login;
+    @Column(nullable =  false, length = 20)
     String password;
+
+    public Empleado() {
+    }
 
     public Empleado(long identificacion, String nombres, String apellidos, String login, String password) {
         this.identificacion = identificacion;
@@ -27,6 +40,20 @@ public class Empleado {
         this.password = password;
     }
 
+    public void setIdentificacion(long identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    
+    
     public void setLogin(String login) {
         this.login = login;
     }

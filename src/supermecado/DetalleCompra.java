@@ -5,17 +5,49 @@
  */
 package supermecado;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author zeus
  */
-public class DetalleCompra {
+@Entity
+
+public class DetalleCompra implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   
+    private long id;
+    
+    @Column
     int cantidadProductos;
+    @OneToOne
     private Producto producto;
 
+    public DetalleCompra() {
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCantidadProductos(int cantidadProductos) {
+        this.cantidadProductos = cantidadProductos;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    
+    
     public DetalleCompra(int cantidadProductos, Producto producto) {
         this.cantidadProductos = cantidadProductos;
         this.producto = producto;

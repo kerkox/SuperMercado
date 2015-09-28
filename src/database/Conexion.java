@@ -21,6 +21,7 @@ public class Conexion {
 
     public String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private Connection conn;
+    //jdbc:derby://localhost:1527/Market
 
     private Conexion() throws Exception {
         NetworkServerControl server = new NetworkServerControl();
@@ -29,7 +30,7 @@ public class Conexion {
         File file = new File("greendb");
         if (!file.exists()) {
             Class.forName(driver);
-            conn = DriverManager.getConnection("jdbc:derby:greendb;create=true;user=avsoft;password=avsoft");
+            conn = DriverManager.getConnection("jdbc:derby:greendb;create=true;user=app;password=app");
         }
     }
 
@@ -43,7 +44,7 @@ public class Conexion {
 
     public Connection getConnection() throws SQLException {
         if (conn == null || conn.isClosed()) {
-            conn = DriverManager.getConnection("jdbc:derby:greendb;create=true;user=avsoft;password=avsoft");
+            conn = DriverManager.getConnection("jdbc:derby:greendb;create=true;user=app;password=app");
         }
         return conn;
     }

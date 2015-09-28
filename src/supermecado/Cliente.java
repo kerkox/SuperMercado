@@ -5,23 +5,51 @@
  */
 package supermecado;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author zeus
  */
-public class Cliente {
+
+@Entity
+public class Cliente implements Serializable{
     
     
+    @Id
     private long identificacion;
+    @Column(nullable = false, length = 100)
     private String nombres;
+    @Column(nullable = false, length = 100)
     private String Apellidos;
+    @Column
     private int puntos=0;
+
+    public Cliente() {
+    }
 
     public Cliente(long identificacion, String nombres, String Apellidos) {
         this.identificacion = identificacion;
         this.nombres = nombres;
         this.Apellidos = Apellidos;
     }
+
+    public void setIdentificacion(long identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setApellidos(String Apellidos) {
+        this.Apellidos = Apellidos;
+    }
+    
+    
     
     public void incrementarPuntos(int puntos){
         this.puntos += puntos;

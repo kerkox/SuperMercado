@@ -5,21 +5,73 @@
  */
 package supermecado;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author zeus
  */
-public class Compra {
+@Entity
+public class Compra implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   
+    private long id;
+    
+    @Column
     private int costoTotal = 0;
-    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
-    private Cliente cliente;
-    private Empleado empleado;
+    @Column
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha = new Date();
+    
+    @OneToOne
+    private Cliente cliente;
+    @OneToOne
+    private Empleado empleado;
+    
+    @OneToMany
+    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
+
+    public Compra() {
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCostoTotal(int costoTotal) {
+        this.costoTotal = costoTotal;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public void setDetalleCompras(ArrayList<DetalleCompra> detalleCompras) {
+        this.detalleCompras = detalleCompras;
+    }
+
+    public long getId() {
+        return id;
+    }
+    
+    
 
     public Compra(Cliente cliente, Empleado vendedor) {
 

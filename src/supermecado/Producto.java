@@ -1,17 +1,29 @@
 
 package supermecado;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author zeus
  */
-public class Producto {
+
+@Entity
+public class Producto implements Serializable{
     
+    @Id
     String codigo;
+    @Column(nullable = false, length = 100)
     String nombre;
+    @Column(nullable = false) 
     int costoUnitario;
+
+    public Producto() {
+    }
 
     public Producto(String codigo, String nombre, int costoUnitario) {
         this.codigo = codigo;
@@ -19,6 +31,16 @@ public class Producto {
         this.costoUnitario = costoUnitario;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
+    
     public void setCostoUnitario(int costoUnitario) {
         this.costoUnitario = costoUnitario;
     }

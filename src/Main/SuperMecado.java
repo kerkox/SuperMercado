@@ -2,9 +2,11 @@ package Main;
 
 import database.Conexion;
 import GUI.Principal;
+import database.ProductoDAO;
 import java.awt.SplashScreen;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.sql.Connection;
 import supermecado.Almacen;
 import supermecado.Cliente;
 import supermecado.Empleado;
@@ -78,6 +80,10 @@ public class SuperMecado {
 //        Conexion con = new Conexion();
             Conexion.getInstance().getConnection();
             System.out.println("Funciono Correctamente");
+            ProductoDAO pro = new ProductoDAO();
+            pro.guardar(new Producto("123", "RAM", 180));
+            System.out.println("Debio de guardar los datos");
+                    
         } catch (Exception error) {
             System.out.println("######Hubo algun problema");
             error.printStackTrace();
