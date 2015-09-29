@@ -18,7 +18,7 @@ import supermecado.Compra;
 
 /**
  *
- * @author zeus
+ * @author Polker
  */
 public class CompraJpaController implements Serializable {
 

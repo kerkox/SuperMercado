@@ -51,6 +51,8 @@ public class Compra implements Serializable {
         this.id = id;
     }
 
+    
+    
     public void setCostoTotal(int costoTotal) {
         this.costoTotal = costoTotal;
     }

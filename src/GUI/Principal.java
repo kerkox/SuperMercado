@@ -5,22 +5,20 @@
  */
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Desktop;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.swing.JOptionPane;
+import persistence.EmpleadoJpaController;
 import supermecado.Almacen;
 import supermecado.Compra;
 import supermecado.DetalleCompra;
 import supermecado.Empleado;
 import supermecado.ObjectNotFoundException;
 import supermecado.Producto;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -324,7 +322,6 @@ public class ListenerLogueo implements ActionListener {
 
                 empleado = market.BuscarEmpleado(loginEmpleado.trim());
                 passEmpleado = Password.getPassword();
-
                 if (market.Logueo(loginEmpleado, passEmpleado)) {
                     clear();
                     PanelLogin.setVisible(false);

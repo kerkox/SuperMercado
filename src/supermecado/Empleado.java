@@ -40,6 +40,8 @@ public class Empleado implements Serializable {
         this.password = password;
     }
 
+    
+    
     public void setIdentificacion(long identificacion) {
         this.identificacion = identificacion;
     }

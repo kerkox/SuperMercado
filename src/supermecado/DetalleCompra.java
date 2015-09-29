@@ -73,6 +73,10 @@ public class DetalleCompra implements Serializable {
         this.cantidadProductos -=cant;
     }
 
+    public long getId() {
+        return id;
+    }
+
    
 
     @Override

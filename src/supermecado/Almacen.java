@@ -109,7 +109,7 @@ public class Almacen {
      */
     public Empleado BuscarEmpleado(long id) throws ObjectNotFoundException{
        
-        return employee;
+        return new Empleado();
         
     }
     

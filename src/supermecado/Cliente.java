@@ -28,6 +28,8 @@ public class Cliente implements Serializable{
     @Column
     private int puntos=0;
 
+    
+    
     public Cliente() {
     }
 

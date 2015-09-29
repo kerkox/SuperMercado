@@ -19,7 +19,7 @@ import supermecado.Cliente;
 
 /**
  *
- * @author zeus
+ * @author Polker
  */
 public class ClienteJpaController implements Serializable {
 
