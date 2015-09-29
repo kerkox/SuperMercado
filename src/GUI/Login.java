@@ -133,7 +133,7 @@ public class Login extends javax.swing.JFrame {
 
             loginEmpleado = User.getText().trim();
 
-            empleado = this.market.BuscarEmpleado(loginEmpleado.trim());
+            empleado = this.market.empleadoJpa.findEmpleado(loginEmpleado.trim());
             passEmpleado = Password.getPassword();
             
 
@@ -146,9 +146,6 @@ public class Login extends javax.swing.JFrame {
                 clear();
             }
             
-                
-            
-                
             
 
         } catch (ObjectNotFoundException notFound) {

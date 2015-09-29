@@ -8,6 +8,7 @@ package supermecado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -42,7 +43,7 @@ public class Compra implements Serializable {
     private Empleado empleado;
     
     @OneToMany
-    private ArrayList<DetalleCompra> detalleCompras = new ArrayList<>();
+    private List<DetalleCompra> detalleCompras = new ArrayList<>();
 
     public Compra() {
     }
@@ -156,7 +157,7 @@ public class Compra implements Serializable {
         return costoTotal;
     }
 
-    public ArrayList<DetalleCompra> getDetalleCompras() {
+    public List<DetalleCompra> getDetalleCompras() {
         return detalleCompras;
     }
 

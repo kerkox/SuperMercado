@@ -6,6 +6,7 @@
 package GUI;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.AbstractTableModel;
@@ -22,7 +23,7 @@ public class VentasRealizadas extends javax.swing.JInternalFrame {
      * Creates new form VentasRealizadas
      */
     private Almacen market = null;
-    private ArrayList<Compra> compras = new ArrayList<>();
+    private List<Compra> compras = new ArrayList<>();
     
    
     

@@ -7,6 +7,7 @@ package supermecado;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,13 +19,14 @@ import javax.persistence.Id;
 @Entity
 public class Empleado implements Serializable {
     
-    @Id
+    
+    @Column(nullable =  false, length = 50)
     long identificacion;
     @Column(nullable =  false, length = 100)
     String nombres;
     @Column(nullable =  false, length = 100)
     String apellidos;
-    @Column(nullable =  false, length = 20)
+    @Id
     String login;
     @Column(nullable =  false, length = 20)
     String password;
@@ -106,6 +108,20 @@ public class Empleado implements Serializable {
     public String toString() {
         return "nombres=" + nombres + ", apellidos=" + apellidos ;
     }
+
+    public Empleado(String login) {
+        this.login = login;
+    }
+
+    public Empleado(String login, String apellidos, long identificacion, String nombres, String password) {
+        this.login = login;
+        this.apellidos = apellidos;
+        this.identificacion = identificacion;
+        this.nombres = nombres;
+        this.password = password;
+    }
+
+   
     
     
 

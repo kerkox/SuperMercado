@@ -314,14 +314,15 @@ public class ListenerLogueo implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                Empleado empleado = null;
+               Empleado empleado = null;
                 String loginEmpleado;
                 char[] passEmpleado;
 
                 loginEmpleado = User.getText().trim();
 
-                empleado = market.BuscarEmpleado(loginEmpleado.trim());
+//                empleado = market.BuscarEmpleado(loginEmpleado.trim());
                 passEmpleado = Password.getPassword();
+                
                 if (market.Logueo(loginEmpleado, passEmpleado)) {
                     clear();
                     PanelLogin.setVisible(false);

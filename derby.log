@@ -1,4 +1,4 @@
-Mon Sep 28 09:55:19 COT 2015 : No se ha podido recibir en el puerto 1527 en el host localhost:
+Tue Sep 29 08:59:33 COT 2015 : No se ha podido recibir en el puerto 1527 en el host localhost:
  java.net.BindException: La dirección ya se está usando
 Se ha generado una excepción al iniciar el servidor de red. DRDA_ListenPort.S:No se ha podido recibir en el puerto 1527 en el host localhost:
  java.net.BindException: La dirección ya se está usando
@@ -16,8 +16,8 @@ Caused by: java.lang.Exception: DRDA_ListenPort.S:No se ha podido recibir en el 
 	at org.apache.derby.impl.drda.NetworkServerControlImpl.blockingStart(Unknown Source)
 	... 6 more
 ----------------------------------------------------------------
-Mon Sep 28 09:55:19 COT 2015:
- Iniciando instancia a816c00e-0150-1473-6a6a-00000345d430 de Derby, versión The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): 
+Tue Sep 29 08:59:33 COT 2015:
+ Iniciando instancia a816c00e-0150-1966-b898-0000053796d0 de Derby, versión The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): 
 en el directorio de base de datos /home/zeus/NetBeansProjects/SuperMercado/greendb con el cargador de clases sun.misc.Launcher$AppClassLoader@66d3c617
 Cargado desde file:/opt/jdk1.8.0_31/db/lib/derby.jar
 java.vendor=Oracle Corporation

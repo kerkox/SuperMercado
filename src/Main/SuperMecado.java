@@ -7,6 +7,14 @@ import java.awt.SplashScreen;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.sql.Connection;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import persistence.ClienteJpaController;
+import persistence.CompraJpaController;
+import persistence.DetalleCompraJpaController;
+import persistence.EmpleadoJpaController;
+import persistence.ProductoJpaController;
 import supermecado.Almacen;
 import supermecado.Cliente;
 import supermecado.Empleado;
@@ -37,6 +45,12 @@ public class SuperMecado {
         Almacen max = new Almacen("SuperMercado MERCAMAX", "800.456.123-1");
 
         try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("SuperMecadoPU");
+            EmpleadoJpaController empleadoJpa = new EmpleadoJpaController(emf);
+            ClienteJpaController clienteJpa = new ClienteJpaController(emf);
+            CompraJpaController compraJpa = new CompraJpaController(emf);
+            DetalleCompraJpaController detalleJpa = new DetalleCompraJpaController(emf);
+            ProductoJpaController productoJpa = new ProductoJpaController(emf);
 
             Empleado[] worker = {new Empleado(12345, "Fabio", "Mendez", "Fer", "F123"),
                 new Empleado(123, "Esperanza", "Gomez", "Esgo", "gomez123"),
@@ -52,15 +66,15 @@ public class SuperMecado {
                 new Cliente(12345, "Carlos", "Lara")};
 
             for (int x = 0; x < worker.length; x++) {
-                max.add(worker[x]);
+                empleadoJpa.create(worker[x]);
             }
 
             for (int x = 0; x < customer.length; x++) {
-                max.add(customer[x]);
+                clienteJpa.create(customer[x]);
             }
 
             for (int x = 0; x < item.length; x++) {
-                max.add(item[x]);
+                productoJpa.create(item[x]);
             }
 
         } catch (ObjectNotFoundException notFound) {
@@ -76,18 +90,18 @@ public class SuperMecado {
 
         System.out.println("Ahora probando el motor de Derby");
         System.out.println("Creando la conexion al servidor DERBY");
-        try {
-//        Conexion con = new Conexion();
-            Conexion.getInstance().getConnection();
-            System.out.println("Funciono Correctamente");
-            ProductoDAO pro = new ProductoDAO();
-            pro.guardar(new Producto("123", "RAM", 180));
-            System.out.println("Debio de guardar los datos");
-                    
-        } catch (Exception error) {
-            System.out.println("######Hubo algun problema");
-            error.printStackTrace();
-        }
+//        try {
+////        Conexion con = new Conexion();
+//            Conexion.getInstance().getConnection();
+//            System.out.println("Funciono Correctamente");
+//            ProductoDAO pro = new ProductoDAO();
+//            pro.guardar(new Producto("123", "RAM", 180));
+//            System.out.println("Debio de guardar los datos");
+//
+//        } catch (Exception error) {
+//            System.out.println("######Hubo algun problema");
+//            error.printStackTrace();
+//        }
 
     }
 

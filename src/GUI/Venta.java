@@ -7,7 +7,6 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import supermecado.Almacen;
@@ -33,7 +32,7 @@ public class Venta extends javax.swing.JInternalFrame {
     private Empleado empleado = null;
     private Compra buy = null;
 
-
+    
     public Venta(Almacen market) {
         this.market = market;
         this.logeado = this.market.log;
@@ -47,7 +46,7 @@ public class Venta extends javax.swing.JInternalFrame {
         this.ClienteId.addActionListener(lbc);
         this.Buscar.addActionListener(lbc);
         //*****************************************
-        
+
         //Agregado de Captura de evento al presionar enter para buscar
         this.ProductoCode.addActionListener((ActionEvent e) -> {
             try {
@@ -76,7 +75,9 @@ public class Venta extends javax.swing.JInternalFrame {
             @Override
             public int getRowCount() {
 //                return buy.getDetalleCompras().size();
-                if(buy == null) return 0; //Necesario para cuando no se han realizado ventas y se cierra la sesion
+                if (buy == null) {
+                    return 0; //Necesario para cuando no se han realizado ventas y se cierra la sesion
+                }
                 return buy.getDetalleCompras().size();
             }
 
@@ -140,17 +141,18 @@ public class Venta extends javax.swing.JInternalFrame {
 //        });
 
     }
-    
-    public void inicio(){
+
+    public void inicio() {
         clear();
         this.Buscar.setEnabled(true);
         buy = null;
         item = null;
         CompraTabla.updateUI();
         ClienteId.setEditable(logeado);
-        this.ClientAlive=false;
-        
+        this.ClientAlive = false;
+
     }
+
     public void clear() {
         ClienteId.setText("");
         ClienteName.setText("");
@@ -173,9 +175,9 @@ public class Venta extends javax.swing.JInternalFrame {
     }
 
     /**
-     * 
-     * @param login  recibe un valor boolenao
-     * Pero hay que mejorarlo para que tome el valor del booleano de la clase
+     *
+     * @param login recibe un valor boolenao Pero hay que mejorarlo para que
+     * tome el valor del booleano de la clase
      */
     public void setLogeado(boolean login) {
 
@@ -183,24 +185,22 @@ public class Venta extends javax.swing.JInternalFrame {
 //        ClienteName.setEditable(login);
 //        ClientePuntos.setEditable(login);
         ProductoCantidad.setEnabled(login);
-        
+
 //        ProductoCantidad.setEditable(login);
         ProductoCode.setEditable(login);
 //        ProductoCosto.setEditable(login);
 //        ProductoName.setEditable(login);
 //        CompraPuntos.setEditable(login);
 //        CompraTotal.setEditable(login);
-        
+
         Buscar.setEnabled(login);
-        if(this.market.logueado==null){
+        if (this.market.logueado == null) {
             vendedor.setText("Vendedor:  No Registrado");
-        }else{
+        } else {
             empleado = this.market.logueado;
-        vendedor.setText("Vendedor: "+this.market.logueado.getNombres()+" "+this.market.logueado.getApellidos());
+            vendedor.setText("Vendedor: " + this.market.logueado.getNombres() + " " + this.market.logueado.getApellidos());
         }
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -285,7 +285,6 @@ public class Venta extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setTitle("Software - SuperMercado");
         setMinimumSize(new java.awt.Dimension(543, 557));
@@ -309,11 +308,6 @@ public class Venta extends javax.swing.JInternalFrame {
         ClientePuntos.setEditable(false);
 
         Buscar.setText("Buscar");
-        Buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscarActionPerformed(evt);
-            }
-        });
 
         ClienteId.setEditable(false);
         ClienteId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
@@ -552,40 +546,13 @@ public class Venta extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-//        if (this.logeado) {
-//            try {
-//                
-//                if(ClienteId.getText().trim().equals("")){
-//                    throw new Exception("El campo de id de Cliente no puede estar vacio");
-//                }
-//                long idCliente = Long.parseLong(ClienteId.getText().trim());
-//
-//                buy = new Compra(this.market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
-////                customer = this.market.BuscarCliente(idCliente);
-//                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
-//                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
-//                Buscar.setEnabled(false);
-//                ClienteId.setEditable(false);
-//                this.ClientAlive = true;
-//                
-//            } catch (ObjectNotFoundException notFound) {
-//                JOptionPane.showMessageDialog(null, notFound.getMessage());
-//
-//            } catch (Exception error) {
-//                JOptionPane.showMessageDialog(null, error.getMessage());
-//            }
-//        }
-
-    }//GEN-LAST:event_BuscarActionPerformed
-
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
-        if (this.logeado&&this.ClientAlive) {
+        if (this.logeado && this.ClientAlive) {
 //            String quantity = ProductoCantidad.getText().trim();
             int quantity = (int) ProductoCantidad.getValue();
             if (item == null) {
                 JOptionPane.showMessageDialog(null, "No has introducido un Producto");
-            } else if (quantity==0) {
+            } else if (quantity == 0) {
                 JOptionPane.showMessageDialog(null, "No se ha registrado la Cantidad");
             } else {
                 //Aqui se creara el Detalle de Compra
@@ -603,7 +570,6 @@ public class Venta extends javax.swing.JInternalFrame {
 //                    detalleCompras = buy.getDetalleCompras(); // para poder actulizar la GUI **********
                     CompraTotal.setText(buy.getCostoTotal() + "");
                     CompraTabla.updateUI();
-                    
 
 //                    detail = null; //liberando forzadamente 
                     item = null;
@@ -617,12 +583,12 @@ public class Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_RegistroActionPerformed
 
     private void DevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DevolverActionPerformed
-        if (this.logeado&&this.ClientAlive) {
+        if (this.logeado && this.ClientAlive) {
             DetalleCompra detail = null;
 //            String quantity = ProductoCantidad.getText().trim();
             int quantity = (int) ProductoCantidad.getValue();
 
-        //*******************************
+            //*******************************
             //Selecionando el producto de la tabla
             if (buy.getDetalleCompras().size() == 1) {
                 detail = buy.getDetalleCompras().get(0);
@@ -687,22 +653,22 @@ public class Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_DevolverActionPerformed
 
     private void RegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVentaActionPerformed
-        if(this.logeado&&this.ClientAlive){
-        try {
-            buy.getCliente().incrementarPuntos(buy.puntosCompra());
-            this.market.add(buy);
+        if (this.logeado && this.ClientAlive) {
+            try {
+                buy.getCliente().incrementarPuntos(buy.puntosCompra());
+                this.market.registrar(buy); // pendiente
 //            this.Compras = this.market.getCompras(); 
 //            this.Ventas.updateUI();
-            inicio();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+                inicio();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }//GEN-LAST:event_RegistrarVentaActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         inicio();
-        
+
     }//GEN-LAST:event_CancelarActionPerformed
 
     /**
@@ -778,37 +744,36 @@ public class Venta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel vendedor;
     // End of variables declaration//GEN-END:variables
-    public class ListenerBuscarCliente implements ActionListener{
+    public class ListenerBuscarCliente implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (logeado) {  
-            try {
-                
-                if(ClienteId.getText().trim().equals("")){
-                    throw new Exception("El campo de id de Cliente no puede estar vacio");
-                }
-                long idCliente = Long.parseLong(ClienteId.getText().trim());
+            if (logeado) {
+                try {
 
-                buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
-                
+                    if (ClienteId.getText().trim().equals("")) {
+                        throw new Exception("El campo de id de Cliente no puede estar vacio");
+                    }
+                    long idCliente = Long.parseLong(ClienteId.getText().trim());
+
+                    buy = new Compra(market.BuscarCliente(idCliente), empleado); // Crecacion de Compra con un cliente
+
 //                customer = this.market.BuscarCliente(idCliente);
-                ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
-                ClientePuntos.setText(buy.getCliente().getPuntos() + "");
-                Buscar.setEnabled(false);
-                ClienteId.setEditable(false);
-                ClientAlive = true;
-                
-            } catch (ObjectNotFoundException notFound) {
-                JOptionPane.showMessageDialog(null, notFound.getMessage());
+                    ClienteName.setText(buy.getCliente().getNombres() + " " + buy.getCliente().getApellidos());
+                    ClientePuntos.setText(buy.getCliente().getPuntos() + "");
+                    Buscar.setEnabled(false);
+                    ClienteId.setEditable(false);
+                    ClientAlive = true;
 
-            } catch (Exception error) {
-                JOptionPane.showMessageDialog(null, error.getMessage());
+                } catch (ObjectNotFoundException notFound) {
+                    JOptionPane.showMessageDialog(null, notFound.getMessage());
+
+                } catch (Exception error) {
+                    JOptionPane.showMessageDialog(null, error.getMessage());
+                }
             }
         }
-        }
-        
-    }
 
+    }
 
 }

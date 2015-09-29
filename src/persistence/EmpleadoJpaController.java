@@ -19,7 +19,7 @@ import supermecado.Empleado;
 
 /**
  *
- * @author Polker
+ * @author zeus
  */
 public class EmpleadoJpaController implements Serializable {
 
@@ -40,7 +40,7 @@ public class EmpleadoJpaController implements Serializable {
             em.persist(empleado);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findEmpleado(empleado.getIdentificacion()) != null) {
+            if (findEmpleado(empleado.getLogin()) != null) {
                 throw new PreexistingEntityException("Empleado " + empleado + " already exists.", ex);
             }
             throw ex;
@@ -61,9 +61,9 @@ public class EmpleadoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                long id = empleado.getIdentificacion();
-                if (findEmpleado(id) == null) {
-                    throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.");
+                String login = empleado.getLogin();
+                if (findEmpleado(login) == null) {
+                    throw new NonexistentEntityException("The empleado with id " + login + " no longer exists.");
                 }
             }
             throw ex;
@@ -74,17 +74,18 @@ public class EmpleadoJpaController implements Serializable {
         }
     }
 
-    public void destroy(long id) throws NonexistentEntityException {
+    
+    public void destroy(String login) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Empleado empleado;
             try {
-                empleado = em.getReference(Empleado.class, id);
-                empleado.getIdentificacion();
+                empleado = em.getReference(Empleado.class, login);
+                empleado.getLogin();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The empleado with id " + login + " no longer exists.", enfe);
             }
             em.remove(empleado);
             em.getTransaction().commit();
@@ -119,14 +120,19 @@ public class EmpleadoJpaController implements Serializable {
         }
     }
 
-    public Empleado findEmpleado(long id) {
+    public Empleado findEmpleado(String login) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Empleado.class, id);
+            return em.find(Empleado.class, login);
         } finally {
             em.close();
         }
     }
+    
+//    public Empleado findEmpleado(int id){
+//        
+//    }
+            
 
     public int getEmpleadoCount() {
         EntityManager em = getEntityManager();
